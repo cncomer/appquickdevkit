@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--54cc60e4fd98c550cf0001e8-->
+    <string name="umeng_AppKey">589c0d21f5ade47e34000416</string>
+    <!--84d3d4ce834b05b87fb35442dfc27fbe-->
+    <string name="umeng_Message_Secret">720aedf414555937613147c89dedf8b8</string>
+
+
+    <string name="baidu_lbsapi_AppKey_release">4NE32wi1r3eKVuVeV3UcgAP3</string>
+
+
+</resources>

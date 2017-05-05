@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+	android:background="@color/wt">
+
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:orientation="vertical"
+		android:id="@+id/splash"
+		android:background="@color/splash_background">
+
+		<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="0dip"
+			android:layout_weight="1.0"
+			android:orientation="vertical"
+			android:gravity="center">
+			<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:src="@drawable/splash_logo"/>
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_horizontal"
+				android:textColor="@color/wt"
+				android:layout_marginTop="4dip"
+				android:text="@string/app_name"/>
+
+			<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"/>
+		</LinearLayout>
+
+		<TextView android:id="@+id/splash_app_version"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_horizontal"
+			android:textColor="@color/wt"
+			android:layout_marginBottom="30dip"
+			android:text="版本V2.98"/>
+	</LinearLayout>
+
+	<FrameLayout android:id="@+id/welcome_layout"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical">
+		<android.support.v4.view.ViewPager
+			android:id="@+id/adsViewPager"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent" >
+		</android.support.v4.view.ViewPager>
+
+		<Button android:id="@+id/splash_button_go"
+			android:layout_width="198dip"
+			android:layout_height="37dip"
+			android:layout_marginBottom="40dp"
+			android:text="@string/enter_app"
+			style="@style/DefaultShapeButton"
+			android:layout_gravity="bottom|center_horizontal"
+			android:visibility="gone"
+			/>
+	</FrameLayout>
+
+
+</FrameLayout>

@@ -1,0 +1,203 @@
+<resources>
+    <string name="app_name">appQuickDevKit</string>
+    <string name="app_name_version">appQuickDevKit 2017</string>
+
+    <string name="menu_ymessage">广播</string>
+    <string name="title_ymeng_category0">"系统消息"</string>
+
+    <string name="msg_no_welcome_page">"没有欢迎动画页面"</string>
+    <string name="enter_app">进入APP</string>
+    <string name="button_next">"下一步"</string>
+    <string name="menu_wait">"等待"</string>
+    <string name="button_save">保存</string>
+    <string name="button_commit">提交</string>
+    <string name="button_ok">确定</string>
+    <string name="button_cancel">取消</string>
+    <string name="button_refresh">点击刷新</string>
+    <string name="menu_more">更多</string>
+    <string name="menu_login">登录</string>
+    <string name="menu_exit">退出</string>
+    <string name="menu_broadcast">消息中心</string>
+    <string name="menu_refresh">刷新</string>
+    <string name="menu_register">注册</string>
+    <string name="menu_setting">设置</string>
+    <string name="menu_help">帮助</string>
+    <string name="menu_about">关于</string>
+    <string name="menu_search">搜索</string>
+    <string name="menu_done">完成</string>
+    <string name="menu_choose">选择</string>
+    <string name="menu_create_card">建卡</string>
+    <string name="menu_edit">编辑</string>
+    <string name="menu_edit_for_delete">删除</string>
+    <string name="menu_delete">删除</string>
+    <string name="menu_create">新建</string>
+    <string name="menu_save">保存</string>
+    <string name="menu_update">更新</string>
+    <string name="menu_confirm">确定</string>
+    <string name="menu_goto">跳转到</string>
+    <string name="menu_back">返回</string>
+    <string name="menu_continue">继续</string>
+    <string name="menu_share">"分享"</string>
+
+    <string name="title_feedback">意见反馈</string>
+    <string name="title_download_page">下载地址</string>
+    <string name="share_click_url">分享请单击连接</string>
+    <string name="copyright">上海吾易信息技术有限公司</string>
+
+    <string name="app_download_url">"http://www.xygj.com/jwb/down.html"</string>
+
+    <string name="msg_wait_exit">正在退出，请稍等...</string>
+    <string name="msg_wait_exit_not_init">请先滑动页面跳过引导画</string>
+
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="wait_upload_image">正在上传....</string>
+
+    <!-- 自动更新 begin-->
+    <string name="app_updating">正在更新，请稍候...</string>
+    <string name="app_update_title">发现新版本</string>
+    <string name="app_update_tip">某些更新必须安装，这取决于更新等级，请阅读更新内容:\n</string>
+    <string name="button_update_ok">更新</string>
+    <string name="button_update_no">不更新</string>
+    <string name="button_update_finish">下载完成，是否开始安装</string>
+    <string name="button_exit">退出</string>
+    <string name="button_exit_confirm">确定退出系统吗？</string>
+    <string name="app_update_error">更新过程中发生了错误，最可能是网络问题，请检查后重试</string>
+    <string name="app_update_cancel">更新操作被取消了</string>
+    <string name="app_update_warn">下载过程中，请稍等...</string>
+    <string name="app_update_not_install">上次下载的更新还未完成安装，建议安装，如果放弃，将不再进行本次更新提示，除非有更新的版本</string>
+    <string name="app_update_not_install_once">上次下载的更新还未完成安装，并且该更新必须安装，否则程序将退出。</string>
+    <string name="app_flash_label">载入中...</string>
+    <string name="button_update">更新</string>
+    <string name="button_home">"官网"</string>
+    <string name="button_introduce">"功能介绍"</string>
+    <string name="msg_app_has_latest">"已是最新版本"</string>
+    <string name="app_about_title">"关于海尔电子保修卡"</string>
+    <string name="format_latest_version">"可用更新%s"</string>
+    <string name="format_current_sw_version">"版本 %s"</string>
+    <string name="format_current_db_version">"型号库版本 %s"</string>
+    <string name="msg_current_device_token">"设备Token(单击复制)"</string>
+    <string name="format_current_device_token_copy">"设备Token(%s)已经复制到剪贴板，请在文本框中粘贴"</string>
+    <string name="msg_current_device_token_null">"设备Token(未注册)"</string>
+    <string name="msg_app_releasenote">"更新说明:"</string>
+    <string name="msg_app_release_time">"更新时间:%s"</string>
+    <string name="msg_app_release_size">"软件大小:%s"</string>
+    <string name="button_install">安装</string>
+    <string name="status_downloading">正在下载(%d%%)....</string>
+    <string name="status_downloading_verify_md5">验证更新文件的完整性...</string>
+    <string name="status_downloading_install_patch">更新补丁...</string>
+    <string name="status_downloading_verify_signature">验证签名...</string>
+    <string name="dialog_msg_download_unfinish_on_exit">下载未完成，是否取消并退出?</string>
+    <string name="dialog_msg_download_unfinish">下载未完成，是否取消?</string>
+    <string name="app_update_canceled_by_user">用户取消下载</string>
+    <string name="app_update_error_md5">下载的安装包完整性校验失败，请重新下载</string>
+    <string name="app_update_error_signature">下载的安装包签名校验失败，请重新下载</string>
+    <string name="app_update_error_patch">增量更新失败，请重新下载</string>
+    <string name="app_update_error_rename">更新包重命名失败，请重新下载</string>
+    <string name="msg_app_update_must_install">您当前的应用程序版本过低,必须更新到最新版本才能继续使用。</string>
+    <!-- 自动更新 end-->
+
+    <!-- 登录注册 begin-->
+    <string name="button_register">用户注册</string>
+
+    <string name="button_find_password">找回密码</string>
+    <string name="tip_3td_account_login">点击如下第三方账号登录</string>
+    <string name="button_login">"登录"</string>
+
+    <string name="button_sms_quick_login">"通过短信验证码登录"</string>
+    <string name="tips_sms_code_has_sent">"短信验证码已发送，请填写验证码"</string>
+    <string name="button_login_issue_help">"登录遇到问题?"</string>
+    <string name="text_account">"账号"</string>
+    <string name="text_account_tel">"手机号"</string>
+    <string name="text_account_pwd">"密码"</string>
+    <string name="text_account_pwd_hint">"请输入密码"</string>
+    <string name="text_verification_code_hint">"请输入验证码"</string>
+    <string name="text_verification_code">"验证码"</string>
+    <string name="button_resend_verification_code">重新获取验证码</string>
+    <string name="text_receive_sms_about_seconds_format">"接收短信大约需要%s秒"</string>
+    <string name="help_cannot_receive_verification_code">"收不到验证码?"</string>
+    <string name="msg_cannot_receive_verification_code_tip">"验证码短信可能略有延迟，确定返回并重新开始?"</string>
+    <string name="button_get_verification_code">"获取验证码"</string>
+    <string name="password_accept_chars">"0123456789abcdefgjhigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"</string>
+    <string name="msg_existing_system_confirm">您是要退出吗？正常操作无需退出。退出后再次进入需要重新登录，下载数据有点慢哦。</string>
+    <string name="msg_input_usrtel_password">请输入你的手机号和密码</string>
+    <string name="msg_input_tel_when_find_password">请先输入要找回密码的手机号码</string>
+    <string name="msg_find_password_success">密码已成功找回，请查看短信</string>
+    <string name="msg_login_confirm_success">登录成功，现在可以开始使用本软件了</string>
+    <string name="msg_login_save_success">账户初始化失败，请再次尝试...</string>
+    <string name="msg_login_dialog_title_wait">正在登录...</string>
+    <string name="msg_update_dialog_title_wait">正在更新...</string>
+    <string name="button_re_vali">重新验证</string>
+    <string name="second_countdown">%1$s秒</string>
+    <string name="tel_not_register">当前手机号码未注册,请先注册</string>
+    <string name="msg_login_download_accountinfo_wait">正在载入账户信息....</string>
+    <string name="msg_login_download_addressinfo_wait">正在载入家信息....</string>
+    <string name="msg_login_download_baoxiuinfo_wait">正在载入保修卡信息....</string>
+    <string name="msg_need_login_operation">点击此处登录</string>
+    <string name="msg_need_create_mm_operation">点击此处新建你的名片</string>
+
+    <string name="msg_input_verification_code">"请输入收到的验证码"</string>
+    <string name="msg_input_usrtel_invalid">"请输入11位手机号码"</string>
+    <string name="msg_input_usrpwd_invalid">"密码请不要输入特殊符号"</string>
+
+
+    <string name="msg_confirm_your_mobile_title">"确认手机号"</string>
+    <string name="msg_confirm_your_mobile_content_format">"我们将发送验证码短信到这个号码:%s"</string>
+    <string name="msg_illegal_mobile_content">"你输入的是一个无效的手机号码"</string>
+    <string name="msg_input_usrtel">请输入你的手机号码</string>
+    <string name="msg_input_yanzheng_code">请输入验证码</string>
+    <string name="msg_input_yanzheng_code_check_net">获取验证码失败，请检查你的网络连接</string>
+    <string name="msg_yanzheng_code_msg_send">短信已下发，请稍后</string>
+    <string name="msg_yanzheng_code_msg_has_registered">该手机号码已经注册，可以直接登录或是找回密码.</string>
+    <string name="msg_input_yanzheng_code_error">验证码输入有误，请重新输入</string>
+    <string name="msg_input_usr_name">请输入姓名</string>
+    <string name="msg_input_usr_pwd">请输入密码</string>
+    <string name="msg_input_pwd_not_match_tips">两次密码输入不一致，请重新输入</string>
+    <string name="hint_input_password">输入您的密码</string>
+    <string name="hint_input_confirm_password">输入您的确认密码</string>
+    <string name="hint_input_usrname">输入您的用户名</string>
+    <string name="hint_input_tel">输入您的手机号码</string>
+    <!-- 登录注册 end-->
+
+    <!-- 设置 begin-->
+    <string name="button_login_or_register">登录/注册</string>
+    <string name="setting_user_info">用户信息</string>
+    <string name="setting_store_info">店铺信息</string>
+    <string name="setting_home_manager">地址管理</string>
+    <string name="button_add_address">"+  新建地址"</string>
+    <string name="hint_address_detail">详细地址</string>
+    <string name="preference_key_account_title">账户设置</string>
+    <string name="preference_key_account_name_title">修改用户名</string>
+    <string name="preference_key_account_password_title">修改密码</string>
+    <string name="preference_key_account_tel_title">修改手机号码</string>
+    <string name="preference_key_exit_title">退出当前账户</string>
+    <string name="text_account_new_tel">"新手机号:"</string>
+    <string name="preference_key_account_nickname_title">修改昵称</string>
+    <string name="preference_key_account_nickname_summary">昵称将用作留言互动时使用，默认是你的用户名</string>
+    <string name="hint_input_old_password">请输入你的当前密码</string>
+    <string name="hint_input_new_password">请输入你的新密码</string>
+    <string name="hint_reinput_new_password">请再次输入你的新密码</string>
+    <string name="msg_input_old_password_error">输入的当前密码有误，请重新输入...</string>
+    <string name="msg_input_new_password_error">你输入的新密码不一致，请确认重新输入</string>
+    <string name="msg_usr_pwd_too_short_tips">密码不能小于6位</string>
+    <string name="setting_activity_code">口令红包</string>
+    <string name="please_input_activity_code">请输入口令</string>
+    <string name="msg_debug_mode_enabled">开发者模式已开启</string>
+    <string name="msg_debug_mode_disabled">开发者模式已关闭</string>
+    <string name="msg_god_mode_enabled">God模式已开启</string>
+    <string name="msg_god_mode_disabled">God模式已关闭</string>
+    <!-- 通用设置 -->
+    <string name="preferences_general_category_title">通用设置</string>
+    <string name="preferences_about_app_title">关于</string>
+    <string name="preferences_clear_cache_title">清空缓存</string>
+    <string name="preferences_export_db">导出数据库</string>
+    <string name="preferences_switch_app_favor">切换App</string>
+    <!-- 通用设置 -->
+    <!-- 设置 end-->
+
+
+    <string name="wifi_starting" msgid="6710266609710860129">"正在打开..."</string>
+    <string name="wifi_stopping" msgid="5952909472548218348">"正在关闭..."</string>
+</resources>

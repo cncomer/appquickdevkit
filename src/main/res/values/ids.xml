@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="model_home" />
+    <item type="id" name="model_settings" />
+    <item type="id" name="model_feedback" />
+
+    <item type="id" name="model_umessage" />
+    <!-- 工单-->
+    <item type="id" name="model_order" />
+
+    <item type="id" name="model_report_location" />
+    <!-- splash_app_version-->
+    <item type="id" name="splash_app_version" />
+    <item type="id" name="splash_button_go" />
+
+
+    <item type="id" name="menu_refresh" />
+
+
+</resources>

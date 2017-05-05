@@ -1,0 +1,45 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="actionBarStyle">@style/BaseTheme_ActionBarStyle</item>
+        <!--<item name="actionBarTheme">@style/BaseTheme_ActionBarTheme</item>-->
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <item name="android:windowBackground">@color/BaseTheme_windowBackground</item>
+        <item name="android:colorBackground">@color/BaseTheme_windowBackground</item>
+
+    </style>
+
+    <style name="AppTheme.Base">
+        <!--<item name="actionBarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>-->
+        <!--<item name="actionBarPopupTheme">@style/ThemeOverlay.AppCompat.Light</item>-->
+        <!--<item name="colorAccent">@color/colorAccent</item>-->
+        <!--<item name="colorControlNormal">?android:attr/textColorPrimary</item>-->
+
+    </style>
+
+    <style name="AppTheme.Base.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.Base.NoActionBar.fullscreen">
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <!-- Note that we use the base animation style here (that is no
+             animations) because we really have no idea how this kind of
+             activity will be used. -->
+        <item name="android:windowAnimationStyle">@android:style/Animation</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="WifiActivityTheme" parent="AppTheme" >
+        <item name="android:windowBackground">@drawable/icon_launcher</item>
+    </style>
+
+</resources>

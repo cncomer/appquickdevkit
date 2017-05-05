@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
+
+    <item
+        android:id="@+id/button_update"
+        android:orderInCategory="100"
+        app:showAsAction="always"
+        android:title="@string/button_update"/>
+    <item
+        android:id="@+id/button_cancel"
+        android:orderInCategory="100"
+        app:showAsAction="always"
+        android:title="@string/button_cancel"/>
+    <item
+        android:id="@+id/button_install"
+        android:orderInCategory="100"
+        app:showAsAction="always"
+        android:title="@string/button_install"/>
+
+</menu>

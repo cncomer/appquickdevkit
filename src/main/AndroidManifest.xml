@@ -1,0 +1,88 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    package="com.cncom.app.kit">
+
+    <permission android:name="${applicationId}.permission.ACCESS_POLICY"
+        android:protectionLevel="signature"/>
+
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+
+    <uses-permission android:name="${applicationId}.permission.ACCESS_POLICY" />
+
+
+    <application android:allowBackup="true" android:label="@string/app_name"
+        android:supportsRtl="true">
+
+        <activity
+            android:name="com.cncom.app.kit.update.UpdateActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.cncom.app.kit.update.AppAboutActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/menu_about" />
+
+        <activity
+            android:name="com.cncom.app.kit.ui.activity.FragmentHostActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
+        </activity>
+
+
+
+        <!-- provider begin-->
+        <provider
+            android:name="com.cncom.app.kit.database.BjnoteProvider"
+            android:authorities="${applicationId}.provider.BjnoteProvider"
+            android:exported="false" />
+        <provider
+            android:name="com.cncom.app.kit.database.DeviceProvider"
+            android:authorities="${applicationId}.provider.DeviceProvider"
+            android:permission="${applicationId}.permission.ACCESS_POLICY"
+            android:exported="false" />
+        <!-- provider end-->
+
+
+        <!-- service begin-->
+        <service android:name="com.cncom.app.kit.update.UpdateService" />
+        <!-- service begin-->
+
+        <!-- 友盟 begin-->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="@string/umeng_AppKey"
+            tools:replace="android:value">
+        </meta-data>
+        <meta-data
+            android:name="UMENG_MESSAGE_SECRET"
+            android:value="@string/umeng_Message_Secret"
+            tools:replace="android:value">
+        </meta-data>
+
+        <!--  友盟 end -->
+
+        <!--&lt;!&ndash; 百度定位 begin&ndash;&gt;-->
+        <!--<service-->
+        <!--android:name="com.baidu.location.f"-->
+        <!--android:enabled="true"-->
+        <!--android:process=":remote" />-->
+
+        <!-- meta-data需要写在application中
+        debug F6:0C:B8:CE:43:BF:DB:F0:41:25:2E:6A:7F:96:2C:10:C4:F4:97:54;com.bestjoy.app.bjwarrantycard MZ3FD7VNPo9x59qVgzZIajQu-->
+        <!-- release版本使用 0E:34:EF:F7:75:97:AB:56:EB:FE:36:1B:95:4F:04:71:42:C4:2E:14;com.bestjoy.app.bjwarrantycard    4NE32wi1r3eKVuVeV3UcgAP3-->
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="@string/baidu_lbsapi_AppKey_release"
+            tools:replace="android:value"/>
+
+    </application>
+
+</manifest>
