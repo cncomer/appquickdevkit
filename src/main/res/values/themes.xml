@@ -38,8 +38,13 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
-    <style name="WifiActivityTheme" parent="AppTheme" >
+    <style name="WifiActivityTheme" parent="AppTheme.Base" >
         <item name="android:windowBackground">@drawable/icon_launcher</item>
     </style>
 
+    <style name="AppTheme.Base.NoActionBar.ShareImage">
+        <!-- Customize your theme here. -->
+        <!--<item name="android:windowTranslucentStatus">true</item>-->
+        <item name="colorPrimaryDark">@color/blk</item>
+    </style>
 </resources>

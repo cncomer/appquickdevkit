@@ -120,4 +120,12 @@ public class CachedAspectRatioImageView extends PImageView {
     public String getCachedDir() {
         return mCacheDir.getAbsolutePath();
     }
+
+    /**
+     * 是否文件存在
+     * @return
+     */
+    public boolean isFileExsited() {
+        return mLoadStatus == Load_Status_SUCCESSED && mCachedFile.exists();
+    }
 }

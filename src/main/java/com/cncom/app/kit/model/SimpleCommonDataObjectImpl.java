@@ -23,7 +23,7 @@ import java.util.List;
 public class SimpleCommonDataObjectImpl extends CommonDataObject {
     protected static int INDEX_BASE = INDEX_BASE_START;
     public static final int INDEX_uid = INDEX_BASE++;
-    private static final int INDEX_sid = INDEX_BASE++;
+    public static final int INDEX_sid = INDEX_BASE++;
     public static final int INDEX_src_content = INDEX_BASE++;
     public static final String WHERE_UID = PROJECTION[INDEX_uid] + "=?";
     public static final String WHERE_UID_DATA_TYPE = WHERE_UID + " and " + DATA_TYPE_SELECTION;

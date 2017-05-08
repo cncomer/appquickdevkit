@@ -36,6 +36,25 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
         </activity>
 
+        <activity
+            android:name="com.cncom.app.kit.ui.activity.SupportUrlSingleTouchImageViewActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="${applicationId}.intent.action.ViewImage"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.cncom.app.kit.ui.activity.SupportAnimatorUrlSingleTouchImageViewActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="${applicationId}.intent.action.ViewShareImage"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
 
 
         <!-- provider begin-->

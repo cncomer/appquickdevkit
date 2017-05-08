@@ -2,8 +2,8 @@ package com.cncom.app.kit.utils;
 
 import com.cncom.app.kit.FavorConfigBase;
 import com.cncom.app.kit.QADKApplication;
+import com.shwy.bestjoy.utils.GzipNetworkUtils;
 import com.shwy.bestjoy.utils.NetworkRequestHelper;
-import com.shwy.bestjoy.utils.NetworkUtils;
 import com.shwy.bestjoy.utils.ServiceResultObject;
 
 import org.json.JSONException;
@@ -52,7 +52,7 @@ public class AppGatewayRequestHelper {
                 params.put("para", request);
                 if (resultIsArray) {
                     try {
-                        serviceResultObject = NetworkUtils.postServiceResultObjectFromUrl(appGateway, params, QADKApplication.getInstance().getSecurityKeyValuesObject());
+                        serviceResultObject = GzipNetworkUtils.postArrayServiceResultObjectFromUrl(appGateway, params, QADKApplication.getInstance().getSecurityKeyValuesObject());
                     } catch (Exception e) {
                         e.printStackTrace();
                         serviceResultObject.mStatusCode = -1;
@@ -60,7 +60,7 @@ public class AppGatewayRequestHelper {
                     }
                 } else {
                     try {
-                        serviceResultObject = NetworkUtils.postArrayServiceResultObjectFromUrl(appGateway, params, QADKApplication.getInstance().getSecurityKeyValuesObject());
+                        serviceResultObject = GzipNetworkUtils.postServiceResultObjectFromUrl(appGateway, params, QADKApplication.getInstance().getSecurityKeyValuesObject());
                     } catch (Exception e) {
                         e.printStackTrace();
                         serviceResultObject.mStatusCode = -1;
@@ -80,7 +80,7 @@ public class AppGatewayRequestHelper {
         params.put("para", request);
         if (resultIsArray) {
             try {
-                serviceResultObject = NetworkUtils.postArrayServiceResultObjectFromUrl(appGateway, params, QADKApplication.getInstance().getSecurityKeyValuesObject());
+                serviceResultObject = GzipNetworkUtils.postArrayServiceResultObjectFromUrl(appGateway, params, QADKApplication.getInstance().getSecurityKeyValuesObject());
             } catch (Exception e) {
                 e.printStackTrace();
                 serviceResultObject.mStatusCode = -1;
@@ -88,7 +88,7 @@ public class AppGatewayRequestHelper {
             }
         } else {
             try {
-                serviceResultObject = NetworkUtils.postServiceResultObjectFromUrl(appGateway, params, QADKApplication.getInstance().getSecurityKeyValuesObject());
+                serviceResultObject = GzipNetworkUtils.postServiceResultObjectFromUrl(appGateway, params, QADKApplication.getInstance().getSecurityKeyValuesObject());
             } catch (Exception e) {
                 e.printStackTrace();
                 serviceResultObject.mStatusCode = -1;
