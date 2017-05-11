@@ -10,4 +10,11 @@
 
     <color name="BaseTheme_windowBackground">@color/wt</color>
     <color name="BaseTheme_actionBarBackground">@color/colorPrimary</color>
+
+    <!-- 字体颜色 主内容 Black 黑色，次要内容 Grey 灰色；时间戳与表单缺省值 Light 灰色；大段的说明内容而且属于主要内容用 Semi 黑。-->
+    <color name="font_color_light">#b2b2b2</color>
+    <color name="font_color_grey">#888888</color>
+    <color name="font_color_semi">#353535</color>
+    <color name="font_color_black">#000000</color>
+
 </resources>

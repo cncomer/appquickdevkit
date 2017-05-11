@@ -61,10 +61,11 @@ public class PhotoTaskProgressDialogFragment extends AbstractTaskProgressDialogF
 
 
     protected File getUpdateImageFile(){
-        File srcFile = null;
         File cachedFile = new File(imgDir, UUID.randomUUID().toString());
-        if (imgSourcePath.startsWith("content")) {
-            srcFile = new File(MediaStoreHelper.getPath(getActivity(), Uri.parse(imgSourcePath)));
+
+        File srcFile = new File(MediaStoreHelper.getPath(getActivity(), Uri.parse(imgSourcePath)));
+
+        if (srcFile.exists()) {
             DebugUtils.logD(TAG, "srcFile.size=" + srcFile.length());
             Bitmap newBitmap = BitmapUtils.scaleBitmapFile(srcFile, imgWidth, imgHeight);
             BitmapUtils.bitmapToFile(newBitmap, cachedFile, 80);

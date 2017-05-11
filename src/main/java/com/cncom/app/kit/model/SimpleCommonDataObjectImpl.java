@@ -27,7 +27,7 @@ public class SimpleCommonDataObjectImpl extends CommonDataObject {
     public static final int INDEX_src_content = INDEX_BASE++;
     public static final String WHERE_UID = PROJECTION[INDEX_uid] + "=?";
     public static final String WHERE_UID_DATA_TYPE = WHERE_UID + " and " + DATA_TYPE_SELECTION;
-    private static final String WHERE_UID_DATA_TYPE_SID = WHERE_UID_DATA_TYPE + " and " + PROJECTION[INDEX_sid] + "=?";
+    public static final String WHERE_UID_DATA_TYPE_SID = WHERE_UID_DATA_TYPE + " and " + PROJECTION[INDEX_sid] + "=?";
 
     public String uid="";
     public String jsonObjectString="";

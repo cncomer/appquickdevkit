@@ -27,7 +27,7 @@ import java.io.File;
  * Created by bestjoy on 16/8/31.
  */
 public class QADKSupportCapturePhotoBDLocationFragment extends QADKFragment {
-    private static final String TAG = "BaseSupportCapturePhotoFragment";
+    private static final String TAG = "QADKSupportCapturePhotoBDLocationFragment";
 
     protected File mAvatorFile;
     protected Uri mAvatorUri;

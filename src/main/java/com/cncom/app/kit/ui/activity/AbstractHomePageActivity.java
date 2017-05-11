@@ -30,6 +30,8 @@ public abstract class AbstractHomePageActivity extends QADKCenterTitleActivity
 
     private static final String TAG = "AbstractHomePageActivity";
 
+    protected Fragment contentFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +45,7 @@ public abstract class AbstractHomePageActivity extends QADKCenterTitleActivity
             DebugUtils.logE(TAG, "showContent contentFragment=" +contentFragment);
             return;
         }
+        this.contentFragment = contentFragment;
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.content_frame, contentFragment);
         ft.commitAllowingStateLoss();
