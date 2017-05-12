@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 
+import com.bestjoy.library.scan.utils.DebugUtils;
 import com.cncom.app.kit.database.BjnoteContent;
 import com.shwy.bestjoy.utils.InfoInterface;
 
@@ -21,6 +22,7 @@ import java.util.List;
  */
 
 public class SimpleCommonDataObjectImpl extends CommonDataObject {
+    private static final String TAG = "SimpleCommonDataObjectImpl";
     protected static int INDEX_BASE = INDEX_BASE_START;
     public static final int INDEX_uid = INDEX_BASE++;
     public static final int INDEX_sid = INDEX_BASE++;
@@ -75,10 +77,12 @@ public class SimpleCommonDataObjectImpl extends CommonDataObject {
             if (uri != null) {
                 mId = ContentUris.parseId(uri);
             }
+            DebugUtils.logD(TAG, "saveInDatebase insert " + uri);
             return uri != null;
         } else {
             //更新
             int updated = BjnoteContent.update(cr, BjnoteContent.CommonData.CONTENT_URI, contentValues, WHERE_UID_DATA_TYPE_SID, selectArgs);
+            DebugUtils.logD(TAG, "saveInDatebase update rows#" + updated);
             return updated > 0;
         }
     }
