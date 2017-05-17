@@ -8,7 +8,6 @@ import android.net.Uri;
 
 import com.bestjoy.library.scan.utils.DebugUtils;
 import com.cncom.app.kit.database.BjnoteContent;
-import com.shwy.bestjoy.utils.InfoInterface;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -87,9 +86,9 @@ public class SimpleCommonDataObjectImpl extends CommonDataObject {
         }
     }
 
-    public static <T extends SimpleCommonDataObjectImpl> List<InfoInterface> parseList(Class<T> cls, JSONArray jsonArray) {
+    public static <T extends SimpleCommonDataObjectImpl> List<T> parseList(Class<T> cls, JSONArray jsonArray) {
         int len = jsonArray.length();
-        List<InfoInterface> list = new ArrayList<>(len);
+        List<T> list = new ArrayList<>(len);
         JSONObject jsonObject = null;
         for(int index=0;index<len;index++) {
             try {
@@ -107,7 +106,7 @@ public class SimpleCommonDataObjectImpl extends CommonDataObject {
 
     }
 
-    public static <T extends InfoInterface> int saveList(List<T> dataList, ContentResolver cr, ContentValues additions) {
+    public static <T extends SimpleCommonDataObjectImpl> int saveList(List<T> dataList, ContentResolver cr, ContentValues additions) {
         int count = 0;
         for(T item : dataList) {
             if (item.saveInDatebase(cr, additions)) {

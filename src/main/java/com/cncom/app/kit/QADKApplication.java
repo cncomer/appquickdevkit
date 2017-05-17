@@ -2,6 +2,7 @@ package com.cncom.app.kit;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -60,6 +61,9 @@ public class QADKApplication extends ComApplication{
 		ComConnectivityManager.getInstance().setContext(this);
 		PhotoManagerUtilsV4.getInstance().setContext(this);
 		ComNotificationManager.getInstance().setContext(this);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+			registerActivityLifecycleCallbacks(new QADKActivityLifecycleHandler());
+		}
 		if (this.getPackageName().equals(processName)) {
 			ScanInitializer.getInstance().init(this);
 			BaiduLocationManager.getInstance().setContext(this);
