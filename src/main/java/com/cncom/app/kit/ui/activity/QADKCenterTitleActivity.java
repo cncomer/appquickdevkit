@@ -21,12 +21,15 @@ public class QADKCenterTitleActivity extends QADKActionbarActivity {
         if (actionBar != null) {
             actionBar.setDisplayShowCustomEnabled(true);
             actionBar.setDisplayShowTitleEnabled(false);
-            actionBar.setCustomView(R.layout.activity_center_title_base);
+            actionBar.setCustomView(getCenterTitleCustomeLayout());
             mActionBarCustomView = (TextView) actionBar.getCustomView().findViewById(R.id.center_title);
             setTitle(getTitle());
         }
 
+    }
 
+    protected int getCenterTitleCustomeLayout() {
+        return R.layout.activity_center_title_base;
     }
 
     @Override

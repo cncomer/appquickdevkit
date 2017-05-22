@@ -16,6 +16,13 @@
         <!-- item name="android:textColor">@color/main_color</item -->
     </style>
 
+    <style name="BaseTheme_windowTitleStyle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/wt</item>
+        <item name="android:textStyle">bold</item>
+        <!-- item name="android:textColor">@color/main_color</item -->
+    </style>
+
 
     <style name="TextAppearance.Switch" parent="TextAppearance.AppCompat.Widget.Switch">
         <item name="textAllCaps">true</item>

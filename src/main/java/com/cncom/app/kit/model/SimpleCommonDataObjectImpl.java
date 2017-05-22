@@ -61,6 +61,7 @@ public class SimpleCommonDataObjectImpl extends CommonDataObject {
         contentValues.put(PROJECTION[INDEX_uid], uid);
         contentValues.put(PROJECTION[INDEX_src_content], jsonObjectString);
         contentValues.put(PROJECTION[INDEX_COMMON_DATA5_DATA_TYPE], dataType);
+        contentValues.put(PROJECTION[INDEX_sid], sid);
 
         if (addtion != null) {
             contentValues.putAll(addtion);

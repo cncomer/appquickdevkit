@@ -11,13 +11,11 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.BatteryManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 
-import com.cncom.app.kit.database.AppDBHelper;
 import com.cncom.app.kit.event.LoginInEvent;
 import com.cncom.app.kit.event.LoginOutEvent;
 import com.cncom.app.kit.update.UpdateActivity;
@@ -477,14 +475,14 @@ public class FavorConfigBase {
 //        }
     }
 
-    public synchronized SQLiteDatabase getAppDatabase(Context context) {
-        // Always return the cached database, if we've got one
-
-        AppDBHelper helper = new AppDBHelper(context);
-        SQLiteDatabase sqLiteDatabase = helper.getWritableDatabase();
-        sqLiteDatabase.setLockingEnabled(true);
-        return sqLiteDatabase;
-    }
+//    public synchronized SQLiteDatabase getAppDatabase(Context context) {
+//        // Always return the cached database, if we've got one
+//
+//        AppDBHelper helper = new AppDBHelper(context);
+//        SQLiteDatabase sqLiteDatabase = helper.getWritableDatabase();
+//        sqLiteDatabase.setLockingEnabled(true);
+//        return sqLiteDatabase;
+//    }
 
     /***
      * 上传照片接口
