@@ -24,6 +24,7 @@ public class BjnoteProvider extends ContentProvider{
 			AppDBHelper.TABLE_NAME_ACCOUNTS,
 			AppDBHelper.TABLE_YOUMENG_PUSHMESSAGE_HISTORY,
 			AppDBHelper.TABLE_COMMON_DATA,
+			AppDBHelper.TABLE_NAME_HOMES,
 	};
 	private static final int BASE = 8;
 	
@@ -37,6 +38,10 @@ public class BjnoteProvider extends ContentProvider{
 	private static final int COMMON_DATA = 0x0200;
 	private static final int COMMON_DATA_ID = 0x0201;
 
+
+	private static final int HOME = 0x0300;
+	private static final int HOME_ID = 0x0301;
+
 	public static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 	 static {
 	        // URI matching table
@@ -49,6 +54,9 @@ public class BjnoteProvider extends ContentProvider{
 
 		 matcher.addURI(BjnoteContent.AUTHORITY, "common_data", COMMON_DATA);
 		 matcher.addURI(BjnoteContent.AUTHORITY, "common_data/#", COMMON_DATA_ID);
+
+		 matcher.addURI(BjnoteContent.AUTHORITY, "homes", HOME);
+		 matcher.addURI(BjnoteContent.AUTHORITY, "homes/#", HOME_ID);
 
 
 	        
@@ -100,6 +108,10 @@ public class BjnoteProvider extends ContentProvider{
 			case COMMON_DATA:
 			case COMMON_DATA_ID:
 				notify = BjnoteContent.CommonData.CONTENT_URI;
+				break;
+			case HOME:
+			case HOME_ID:
+				notify = BjnoteContent.Homes.CONTENT_URI;
 				break;
 
     	}
@@ -261,6 +273,7 @@ public class BjnoteProvider extends ContentProvider{
 	    	case ACCOUNT_ID:
 			case YMESSAGE_ID:
 			case COMMON_DATA_ID:
+			case HOME_ID:
 			try {
 				id = ContentUris.parseId(uri);
 			} catch(NumberFormatException e) {

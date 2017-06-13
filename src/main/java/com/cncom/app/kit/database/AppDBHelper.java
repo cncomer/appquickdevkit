@@ -73,11 +73,11 @@ private static final String TAG = "HaierDBHelper";
   public static final String DATA48 = "data48";
   public static final String DATA49 = "data49";
   public static final String DATA50 = "data50";
+    public static final String IS_DEFAULT = "isDefault";
   //account table
   public static final String TABLE_NAME_ACCOUNTS = "accounts";
   /**用户唯一识别码*/
   public static final String ACCOUNT_UID = "uid";
-  public static final String ACCOUNT_DEFAULT = "isDefault";
   public static final String ACCOUNT_TEL = "tel";
   public static final String ACCOUNT_NAME = "name";
   public static final String ACCOUNT_NICKNAME = "nickname";
@@ -110,6 +110,19 @@ private static final String TAG = "HaierDBHelper";
     public static final String COMMON_DATA2_INT = "data2_int";
     public static final String COMMON_DATA3_INT = "data3_int";
     public static final String COMMON_DATA4_INT = "data4_int";
+
+
+
+
+    //home table
+    public static final String TABLE_NAME_HOMES = "homes";
+    /**地址id,每个地址的id,这个目前没用,要是更改地址的话可能会用到*/
+    public static final String HOME_AID = "aid";
+    public static final String HOME_NAME = "name";
+    /**详细地址*/
+    public static final String HOME_DETAIL = "home_detail";
+    /**我的家TAB位置,用户可以调整顺序*/
+    public static final String POSITION = "position";
 
   
   public AppDBHelper(Context context) {
@@ -161,6 +174,8 @@ private static final String TAG = "HaierDBHelper";
       DebugUtils.logD(TAG, "onCreate");
        // Create Account table
       createAccountTable(sqLiteDatabase);
+      //Create Homes table
+      createHomesTable(sqLiteDatabase);
       createYoumengMessageTable(sqLiteDatabase);
       createCommonTable(sqLiteDatabase);
 
@@ -184,7 +199,7 @@ private static final String TAG = "HaierDBHelper";
 	            ACCOUNT_UID + " TEXT NOT NULL, " +
 	            ACCOUNT_TEL + " TEXT, " +
 	            ACCOUNT_PWD + " TEXT, " +
-	            ACCOUNT_DEFAULT + " INTEGER NOT NULL DEFAULT 1, " +
+                        IS_DEFAULT + " INTEGER NOT NULL DEFAULT 1, " +
 	            ACCOUNT_NAME + " TEXT, " +
 	            ACCOUNT_NICKNAME + " TEXT, " +
 	            ACCOUNT_PHONES  + " TEXT, " +
@@ -349,6 +364,44 @@ private static final String TAG = "HaierDBHelper";
                         ");");
     }
 
+
+    private void createHomesTable(SQLiteDatabase sqLiteDatabase) {
+        sqLiteDatabase.execSQL(
+                "CREATE TABLE " + TABLE_NAME_HOMES + " (" +
+                        ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        ACCOUNT_UID + " TEXT NOT NULL, " +
+                        HOME_AID + " INTEGER, " +
+                        DeviceDBHelper.DEVICE_PRO_NAME + " TEXT, " +
+                        DeviceDBHelper.DEVICE_CITY_NAME + " TEXT, " +
+                        DeviceDBHelper.DEVICE_DIS_NAME + " TEXT, " +
+                        DeviceDBHelper.DEVICE_HAIER_ADMIN_CODE + " TEXT, " +
+                        HOME_DETAIL + " TEXT, " +
+                        IS_DEFAULT + " INTEGER NOT NULL DEFAULT 1, " +
+                        POSITION + " INTEGER NOT NULL DEFAULT 1, " +
+                        DATA1 + " TEXT, " +
+                        DATA2 + " TEXT, " +
+                        DATA3 + " TEXT, " +
+                        DATA4 + " TEXT, " +
+                        DATA5 + " TEXT, " +
+                        DATA6 + " TEXT, " +
+                        DATA7 + " TEXT, " +
+                        DATA8 + " TEXT, " +
+                        DATA9 + " TEXT, " +
+                        DATA10 + " TEXT, " +
+                        DATA11 + " TEXT, " +
+                        DATA12 + " TEXT, " +
+                        DATA13 + " TEXT, " +
+                        DATA14 + " TEXT, " +
+                        DATA15 + " TEXT, " +
+                        DATA16 + " TEXT, " +
+                        DATA17 + " TEXT, " +
+                        DATA18 + " TEXT, " +
+                        DATA19 + " TEXT, " +
+                        DATA20 + " TEXT, " +
+                        DATE + " TEXT" +
+                        ");");
+    }
+
   
   private void addTextColumn(SQLiteDatabase sqLiteDatabase, String table, String column) {
 	    String alterForTitleSql = "ALTER TABLE " + table +" ADD " + column + " TEXT";
@@ -362,6 +415,19 @@ private static final String TAG = "HaierDBHelper";
   @Override
   public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
 	  DebugUtils.logD(TAG, "onUpgrade oldVersion " + oldVersion + " newVersion " + newVersion);
+
+      if (oldVersion < 2) {
+            sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_ACCOUNTS);
+		    sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_HOMES);
+		    sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_YOUMENG_PUSHMESSAGE_HISTORY);
+            sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_COMMON_DATA);
+
+		    sqLiteDatabase.execSQL("DROP TRIGGER IF EXISTS " + "insert_account");
+		    sqLiteDatabase.execSQL("DROP TRIGGER IF EXISTS " + "update_default_account");
+
+            onCreate(sqLiteDatabase);
+		    return;
+      }
 //	  if (oldVersion < 1) {
 //			sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_ACCOUNTS);
 //		    sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_CARDS);

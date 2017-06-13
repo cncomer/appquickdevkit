@@ -98,6 +98,10 @@ public class BjnoteContent {
 		public static final Uri CONTENT_URI = Uri.withAppendedPath(BjnoteContent.CONTENT_URI, "common_data");
 	}
 
+	public static class Homes extends BjnoteContent{
+		public static final Uri CONTENT_URI = Uri.withAppendedPath(BjnoteContent.CONTENT_URI, "homes");
+	}
+
 	/**通用策略数据*/
 	public static class Policy {
 		public static final Uri CONTENT_URI = Uri.withAppendedPath(BjnoteContent.DEVICE_CONTENT_URI, "policy");

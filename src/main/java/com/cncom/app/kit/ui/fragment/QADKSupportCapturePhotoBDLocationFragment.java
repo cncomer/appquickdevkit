@@ -15,6 +15,7 @@ import com.cncom.app.kit.R;
 import com.cncom.library.lbs.baidu.event.LocationChangeEvent;
 import com.cncom.library.lbs.baidu.service.BaiduLocationService;
 import com.shwy.bestjoy.utils.DebugUtils;
+import com.shwy.bestjoy.utils.FilesUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -33,9 +34,10 @@ public class QADKSupportCapturePhotoBDLocationFragment extends QADKFragment {
     protected Uri mAvatorUri;
     protected boolean mNeedUpdateAvatorFromCamera = false;
     protected boolean mNeedUpdateAvatorFromGallery = false;
-    protected int mCurrrentRequest = 0;
     protected Handler mHandler;
-    protected static final int REQUEST_UPDATE_AVATOR = 2;
+    protected static final int REQUEST_UPDATE_PHOTO = 2;
+
+    public static final int REQUEST_UPDATE_AVATOR = REQUEST_UPDATE_PHOTO;
     /**标记是哪个照片请求*/
     protected int photoRequestCode;
     @Override
@@ -44,9 +46,7 @@ public class QADKSupportCapturePhotoBDLocationFragment extends QADKFragment {
         mAvatorFile = QADKApplication.getInstance().getExternalStorageCache(null, ".0000000000000000.png");
 
         if (savedInstanceState == null) {
-            if (mAvatorFile != null && mAvatorFile.exists()) {
-                mAvatorFile.delete();
-            }
+            FilesUtils.deleteFile(TAG, mAvatorFile);
         }
 
 
@@ -56,12 +56,11 @@ public class QADKSupportCapturePhotoBDLocationFragment extends QADKFragment {
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 switch (msg.what) {
-                    case REQUEST_UPDATE_AVATOR:
+                    case REQUEST_UPDATE_PHOTO:
                         DebugUtils.logD(TAG, "handleMessage() REQUEST_UPDATE_AVATOR");
-                        updateAvatorAsync();
+                        updateAvatorAsync(photoRequestCode);
                         break;
                 }
-                mCurrrentRequest = 0;
 
             }
 
@@ -71,10 +70,9 @@ public class QADKSupportCapturePhotoBDLocationFragment extends QADKFragment {
             mNeedUpdateAvatorFromCamera = savedInstanceState.getBoolean("mNeedUpdateAvatorFromCamera");
             mNeedUpdateAvatorFromGallery = savedInstanceState.getBoolean("mNeedUpdateAvatorFromGallery");
             photoRequestCode = savedInstanceState.getInt("photoRequestCode", 0);
-            mCurrrentRequest  = savedInstanceState.getInt("mNeedUpdateBgimgFromGallery", 0);
             DebugUtils.logD(TAG, "onCreate savedInstanceState != null, get mNeedUpdateAvatorFromCamera="
                     + mNeedUpdateAvatorFromCamera + ", mNeedUpdateAvatorFromGallery=" + mNeedUpdateAvatorFromGallery
-                    + ", mCurrrentRequest=" + mCurrrentRequest+", photoRequestCode="+photoRequestCode);
+                    + ", photoRequestCode="+photoRequestCode);
         }
         EventBus.getDefault().register(this);
     }
@@ -84,11 +82,8 @@ public class QADKSupportCapturePhotoBDLocationFragment extends QADKFragment {
         super.onResume();
         DebugUtils.logD(TAG, "onResume() mNeedUpdateAvatorFromCamera=" + mNeedUpdateAvatorFromCamera + ", mNeedUpdateAvatorFromGallery=" + mNeedUpdateAvatorFromGallery);
         if (mNeedUpdateAvatorFromCamera || mNeedUpdateAvatorFromGallery) {
-            if (mCurrrentRequest == REQUEST_UPDATE_AVATOR) {
-                DebugUtils.logD(TAG, "onResume() removeMessages REQUEST_UPDATE_AVATOR, sendEmptyMessage REQUEST_UPDATE_AVATOR");
-                mHandler.removeMessages(REQUEST_UPDATE_AVATOR);
-                mHandler.sendEmptyMessageDelayed(REQUEST_UPDATE_AVATOR, 500);
-            }
+            mHandler.removeMessages(REQUEST_UPDATE_PHOTO);
+            mHandler.sendEmptyMessageDelayed(REQUEST_UPDATE_PHOTO, 500);
 
         }
     }
@@ -109,22 +104,19 @@ public class QADKSupportCapturePhotoBDLocationFragment extends QADKFragment {
         outState.putBoolean("mNeedUpdateAvatorFromCamera", mNeedUpdateAvatorFromCamera);
         outState.putBoolean("mNeedUpdateAvatorFromGallery", mNeedUpdateAvatorFromGallery);
 
-        outState.putInt("mCurrrentRequest", mCurrrentRequest);
 
         outState.putInt("photoRequestCode", photoRequestCode);
         DebugUtils.logD(TAG, "onSaveInstanceState() save mNeedUpdateAvatorFromCamera=" + mNeedUpdateAvatorFromCamera + ", mNeedUpdateAvatorFromGallery=" + mNeedUpdateAvatorFromGallery
-                + ",mCurrrentRequest="+mCurrrentRequest + ",photoRequestCode="+photoRequestCode);
+                + ",photoRequestCode="+photoRequestCode);
     }
 
     public void onPickFromGalleryStart(int resultCode) {
-        photoRequestCode = resultCode;
         mAvatorUri = null;
         mNeedUpdateAvatorFromGallery = false;
         pickFromGallery(resultCode);
     }
 
     public void onPickFromCameraStart(int resultCode) {
-        photoRequestCode = resultCode;
         if (mAvatorFile != null && mAvatorFile.exists()) {
             mAvatorFile.delete();
         }
@@ -194,6 +186,10 @@ public class QADKSupportCapturePhotoBDLocationFragment extends QADKFragment {
     /**
      * 默认是上传通用图片
      */
+    protected void updateAvatorAsync(int photoRequestCode) {
+       throw new RuntimeException("Stub must override this method");
+    }
+
     protected void updateAvatorAsync() {
         Bundle bundle = new Bundle();
         if (mNeedUpdateAvatorFromCamera) {
@@ -219,11 +215,9 @@ public class QADKSupportCapturePhotoBDLocationFragment extends QADKFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         switch(which) {
                             case 0: //Gallery
-                                mCurrrentRequest = REQUEST_UPDATE_AVATOR;
                                 onPickFromGalleryStart(requestCode);
                                 break;
                             case 1: //Camera
-                                mCurrrentRequest = REQUEST_UPDATE_AVATOR;
                                 onPickFromCameraStart(requestCode);
                                 break;
                         }

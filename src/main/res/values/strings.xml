@@ -30,6 +30,7 @@
     <string name="menu_edit">编辑</string>
     <string name="menu_edit_for_delete">删除</string>
     <string name="menu_delete">删除</string>
+    <string name="menu_delete_all">删除全部</string>
     <string name="menu_create">新建</string>
     <string name="menu_save">保存</string>
     <string name="menu_update">更新</string>
@@ -192,6 +193,8 @@
     <string name="preferences_general_category_title">通用设置</string>
     <string name="preferences_about_app_title">关于</string>
     <string name="preferences_clear_cache_title">清空缓存</string>
+    <string name="preferences_debug_mode_title">调试模式</string>
+    <string name="preferences_develop_mode_title">开发者模式</string>
     <string name="preferences_export_db">导出数据库</string>
     <string name="preferences_switch_app_favor">切换App</string>
     <!-- 通用设置 -->

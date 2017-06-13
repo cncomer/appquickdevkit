@@ -115,4 +115,21 @@ public class AppGatewayRequestHelper {
         request.put("para", para);
         return request;
     }
+
+    /**
+     * 构建形如{method:"", para:{}}的请求参数
+     * @param method
+     * @param para
+     * @return
+     * @throws JSONException
+     */
+    public static JSONObject buildRequestData(String method, JSONObject para, boolean includeBasicPara) throws JSONException {
+        JSONObject request = new JSONObject();
+        request.put("method", method);
+
+        if (includeBasicPara) FavorConfigBase.getInstance().addRequestParam(para);
+
+        request.put("para", para);
+        return request;
+    }
 }

@@ -35,6 +35,7 @@ public class QADKWifiManager {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
+            DebugUtils.logD(TAG, "onReceive action=" + action);
             WifiEvent wifiEvent = new WifiEvent();
             wifiEvent.action = action;
             wifiEvent.object = intent;
@@ -83,11 +84,11 @@ public class QADKWifiManager {
     }
 
 
-    public void onResume() {
+    public void registerReceiver(Context context) {
         context.registerReceiver(mReceiver, intentFilter);
     }
 
-    public void onPause() {
+    public void unregisterReceiver(Context context) {
         context.unregisterReceiver(mReceiver);
     }
 
