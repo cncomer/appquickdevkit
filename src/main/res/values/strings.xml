@@ -40,6 +40,9 @@
     <string name="menu_continue">继续</string>
     <string name="menu_share">"分享"</string>
 
+    <string name="set_to_default">设为默认</string>
+    <string name="home_address_not_set">地址未设置</string>
+
     <string name="title_feedback">意见反馈</string>
     <string name="title_download_page">下载地址</string>
     <string name="share_click_url">分享请单击连接</string>
@@ -203,4 +206,35 @@
 
     <string name="wifi_starting" msgid="6710266609710860129">"正在打开..."</string>
     <string name="wifi_stopping" msgid="5952909472548218348">"正在关闭..."</string>
+
+
+
+
+    <!--地址设置 begin -->
+    <string name="msg_wait_request_location">正在定位....</string>
+    <string name="format_msg_wait_request_search">正在检索[%s]....</string>
+    <string name="default_home_name">我的家</string>
+    <string name="title_set_address">设置地址</string>
+    <string name="address">地址</string>
+    <string name="province">省</string>
+    <string name="city">市</string>
+    <string name="district">区</string>
+    <string name="name">姓名</string>
+    <string name="input_province_tips">请先选择省份</string>
+    <string name="input_city_tips">请先选择城市</string>
+    <string name="input_address_tips">请选择地址</string>
+    <string name="msg_input_usr_pro">请输入省份</string>
+    <string name="msg_input_usr_city">请输入城市</string>
+    <string name="msg_input_usr_dis">请输入地区</string>
+    <string name="input_idcard_name_tips">请输入姓名</string>
+    <string name="input_idcard_title_tips">请输入职位</string>
+    <string name="input_idcard_org_tips">请输入公司名称</string>
+    <string name="input_addressdetail_tips">街道地址</string>
+    <string name="msg_input_usr_place_detail">请输入你的详细地址</string>
+    <string name="usr_street_place_detail">详细地址</string>
+
+    <string name="contacts_phone">联系电话</string>
+    <string name="contacts_name">姓名</string>
+    <string name="default_address">默认地址</string>
+    <!--地址设置 end -->
 </resources>

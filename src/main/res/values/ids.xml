@@ -17,4 +17,9 @@
     <item type="id" name="menu_refresh" />
 
 
+
+
+    <!--刷新房间-->
+    <item type="id" name="event_home_changed" />
+    <item type="id" name="event_home_info_changed" />
 </resources>

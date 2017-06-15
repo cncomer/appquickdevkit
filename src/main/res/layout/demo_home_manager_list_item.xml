@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:descendantFocusability="blocksDescendants"
+    android:padding="10dip">
+
+    <TextView
+        android:id="@+id/usr_name_input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/blk"
+        android:textSize="18sp"
+        android:text="XXXX"/>
+
+    <TextView
+        android:id="@+id/tel_input"
+        android:layout_toRightOf="@+id/usr_name_input"
+        android:layout_marginLeft="20dip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/blk"
+        android:textSize="18sp"
+        android:text="XXXX"/>
+
+
+    <TextView
+        android:id="@+id/address_input"
+        android:layout_below="@+id/tel_input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dip"
+        android:minLines="2"
+        android:textColor="#999999"
+        android:text="XXXX"/>
+
+    <View android:id="@+id/point1"
+        android:layout_marginTop="4dip"
+        android:background="#cecccc"
+        android:layout_width="fill_parent"
+        android:layout_below="@+id/address_input"
+        android:layout_height="@dimen/line_1px"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_below="@+id/point1"
+        android:layout_marginTop="4dip">
+
+        <CheckBox android:id="@+id/checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/set_to_default"/>
+        <View
+            android:layout_width="0dip"
+            android:layout_weight="1.0"
+            android:layout_height="@dimen/line_1px"/>
+
+        <Button
+            android:id="@+id/menu_edit"
+            android:layout_height="28dip"
+            style="@style/DefaultShapeButton.Borderless"
+            android:textColor="#999999"
+            android:text="@string/menu_edit"/>
+        <Button
+            android:id="@+id/menu_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="28dip"
+            style="@style/DefaultShapeButton.Borderless"
+            android:textColor="#999999"
+            android:text="@string/menu_delete"/>
+    </LinearLayout>
+</RelativeLayout>

@@ -38,6 +38,7 @@ public class QADKSupportCapturePhotoBDLocationFragment extends QADKFragment {
     protected static final int REQUEST_UPDATE_PHOTO = 2;
 
     public static final int REQUEST_UPDATE_AVATOR = REQUEST_UPDATE_PHOTO;
+    public static final int REQUEST_LOCATION = 3;
     /**标记是哪个照片请求*/
     protected int photoRequestCode;
     @Override

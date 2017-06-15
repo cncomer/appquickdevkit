@@ -223,12 +223,11 @@ public class HomeObjectBase implements InfoInterface {
      * 将HomeObject对象的Bundle形式添加到bundle中在组件中传递
      * @return
      */
-    public Bundle addHomeObjectBundle(Bundle bundle) {
-        Bundle data = getHomeObjectBundle();
+    public static void addHomeObjectToBundle(HomeObjectBase homeObjectBase, Bundle bundle) {
+        Bundle data = homeObjectBase.getHomeObjectBundle();
         if (bundle != null) {
             bundle.putBundle(TAG, data);
         }
-        return data;
     }
 
     public static String getDisID(ContentResolver cr, String pro, String city, String disName) {
@@ -271,7 +270,7 @@ public class HomeObjectBase implements InfoInterface {
 
 
     public static Cursor getAllHomesCursor(ContentResolver cr, String uid) {
-        return cr.query(BjnoteContent.Homes.CONTENT_URI, HOME_PROJECTION, WHERE_HOME_ACCOUNTID, new String[]{uid}, AppDBHelper.HOME_AID + " asc");
+        return cr.query(BjnoteContent.Homes.CONTENT_URI, HOME_PROJECTION, WHERE_HOME_ACCOUNTID, new String[]{uid}, AppDBHelper.HOME_AID + " desc");
     }
     public static Cursor getHomeObjectCursor(ContentResolver cr, String uid, String aid) {
        return cr.query(BjnoteContent.Homes.CONTENT_URI, HOME_PROJECTION, WHERE_ACCOUNT_ID_AND_HOME_ADDRESS_ID, new String[]{uid, aid}, null);
