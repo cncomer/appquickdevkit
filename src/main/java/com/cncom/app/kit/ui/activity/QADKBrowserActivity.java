@@ -23,9 +23,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -56,9 +56,9 @@ import java.lang.reflect.Field;
  * 
  * @author yeluosuifeng2005@gmail.com (Eric Chen)
  */
-public class QADKBrowserActivityImpl extends QADKActionbarActivity {
+public class QADKBrowserActivity extends QADKActionbarActivity {
 
-	private static final String TAG = "BrowserActivity";
+	private static final String TAG = "QADKBrowserActivity";
 	protected WebView webView;
 	protected String mUrl;
 	private Toolbar mAppBar;
@@ -79,8 +79,6 @@ public class QADKBrowserActivityImpl extends QADKActionbarActivity {
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-
-		Log.w(TAG, "onCreate");
 		if (isFinishing()) {
 			return;
 		}
@@ -109,7 +107,7 @@ public class QADKBrowserActivityImpl extends QADKActionbarActivity {
 				Field logoViewField = Toolbar.class.getDeclaredField("mLogoView");
 				logoViewField.setAccessible(true);
 				finishBtn = (ImageView) logoViewField.get(mAppBar);
-				finishBtn.setId(finishBtn.toString().hashCode());
+				finishBtn.setId(R.id.button_finish);
 				finishBtn.setBackgroundDrawable(iconLogoBackground.getDrawable());
 				finishBtn.setOnClickListener(new View.OnClickListener() {
 					@Override
@@ -465,8 +463,8 @@ public class QADKBrowserActivityImpl extends QADKActionbarActivity {
 //
 //		MenuItemCompat.setShowAsAction(menuItem, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
 //
-//		menuItem = menu.add(1, R.id.menu_refresh, 1, R.string.menu_refresh);
-//		MenuItemCompat.setShowAsAction(menuItem, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
+		MenuItem menuItem = menu.add(1, R.id.menu_refresh, 1, R.string.menu_refresh);
+		MenuItemCompat.setShowAsAction(menuItem, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
 		return true;
 	}
 	
@@ -509,11 +507,21 @@ public class QADKBrowserActivityImpl extends QADKActionbarActivity {
 //				webView.clearCache(true);
 //				webView.loadUrl(mUrl);
 //			}
-			webView.clearCache(true);
-			webView.reload();
+			reload(true);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	/**
+	 * 重新刷新加载网页
+	 */
+	protected void reload(boolean clearCache) {
+		if (clearCache) {
+			webView.clearCache(true);
+		}
+
+		webView.reload();
 	}
 
 	@Override
@@ -534,7 +542,7 @@ public class QADKBrowserActivityImpl extends QADKActionbarActivity {
 	
 	public static void startActivity(Context context, String url, String title) {
 		DebugUtils.logD(TAG, "startActivity url " + url);
-		Intent intent = new Intent(context, QADKBrowserActivityImpl.class);
+		Intent intent = new Intent(context, QADKBrowserActivity.class);
 		intent.putExtra(Intents.EXTRA_URI, url);
 		if (!TextUtils.isEmpty(title)) {
 			intent.putExtra(Intents.EXTRA_NAME, title);
@@ -543,7 +551,7 @@ public class QADKBrowserActivityImpl extends QADKActionbarActivity {
 	}
 
 	public static Intent createIntent(Context context, String url, String title) {
-		Intent intent = new Intent(context, QADKBrowserActivityImpl.class);
+		Intent intent = new Intent(context, QADKBrowserActivity.class);
 		intent.putExtra(Intents.EXTRA_URI, url);
 		if (!TextUtils.isEmpty(title)) {
 			intent.putExtra(Intents.EXTRA_NAME, title);
@@ -552,7 +560,7 @@ public class QADKBrowserActivityImpl extends QADKActionbarActivity {
 	}
 	public static void startActivity(Context context, String url, String title, boolean desktoSites) {
 		DebugUtils.logD(TAG, "startActivity url " + url);
-		Intent intent = new Intent(context, QADKBrowserActivityImpl.class);
+		Intent intent = new Intent(context, QADKBrowserActivity.class);
 		intent.putExtra(Intents.EXTRA_URI, url);
 		if (!TextUtils.isEmpty(title)) {
 			intent.putExtra(Intents.EXTRA_NAME, title);
@@ -596,6 +604,7 @@ public class QADKBrowserActivityImpl extends QADKActionbarActivity {
 		//单纯的销毁我们的native页面并不能达到让页面中这些内容停止执行, 所以在小会native页面之前，将webview的页面设置问空页面即可.
 		// 当我们对Activity进行finish的时候，webview持有的页面并不会立即释放，如果页面中有在执行js等其他操作，仅仅进行finish是完全不够的。
 		webView.loadUrl("about:blank");
+		webView.clearCache(true);
 		super.finish();
 	}
 

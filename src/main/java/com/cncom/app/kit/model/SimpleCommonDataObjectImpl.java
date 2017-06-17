@@ -49,6 +49,9 @@ public class SimpleCommonDataObjectImpl extends CommonDataObject {
     public static int deleteAll(ContentResolver cr, String uid, String dataType) {
         return cr.delete(BjnoteContent.CommonData.CONTENT_URI, WHERE_UID_DATA_TYPE, new String[]{uid, dataType});
     }
+    public static int delete(ContentResolver cr, String uid, String dataType, String sid) {
+        return cr.delete(BjnoteContent.CommonData.CONTENT_URI, WHERE_UID_DATA_TYPE_SID, new String[]{uid, dataType, sid});
+    }
 
     public static Cursor getAll(ContentResolver cr, String uid, String dataType) {
         return cr.query(BjnoteContent.CommonData.CONTENT_URI, PROJECTION, WHERE_UID_DATA_TYPE, new String[]{uid, dataType},  null);

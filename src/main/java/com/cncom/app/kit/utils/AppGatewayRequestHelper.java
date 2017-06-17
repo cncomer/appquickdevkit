@@ -1,5 +1,6 @@
 package com.cncom.app.kit.utils;
 
+import com.bestjoy.library.scan.utils.DebugUtils;
 import com.cncom.app.kit.FavorConfigBase;
 import com.cncom.app.kit.QADKApplication;
 import com.shwy.bestjoy.utils.GzipNetworkUtils;
@@ -17,6 +18,7 @@ import java.util.HashMap;
 
 public class AppGatewayRequestHelper {
 
+    private static final String TAG = "AppGatewayRequestHelper";
 
     public static interface Callback {
         public void complete(ServiceResultObject serviceResultObject);
@@ -113,6 +115,8 @@ public class AppGatewayRequestHelper {
         FavorConfigBase.getInstance().addRequestParam(para);
 
         request.put("para", para);
+
+        DebugUtils.logD(TAG, "buildRequestData " + request.toString());
         return request;
     }
 
