@@ -126,5 +126,14 @@
     <orderEntry type="module" module-name="ZXingScanLibrary" exported="" />
     <orderEntry type="module" module-name="bestJoyAppAlipay" exported="" />
     <orderEntry type="library" exported="" name="org.apache.http.legacy-android-25" level="project" />
+    <orderEntry type="library" exported="" name="umeng-onlineconfig_v1.0.0" level="project" />
+    <orderEntry type="library" exported="" name="utdid4all-1.1.5_proguard" level="project" />
+    <orderEntry type="library" exported="" name="analytics-6.0.1" level="project" />
+    <orderEntry type="library" exported="" name="com.umeng.message_v3.0.0" level="project" />
+    <orderEntry type="library" exported="" name="BaiduTraceSDK_v2_1_15" level="project" />
+    <orderEntry type="library" exported="" name="IndoorscapeAlbumPlugin" level="project" />
+    <orderEntry type="library" exported="" name="BaiduLBS_Android" level="project" />
+    <orderEntry type="library" exported="" name="alipaySdk-20161222" level="project" />
+    <orderEntry type="library" exported="" name="wechat-sdk-android-without-mta-1.0.2" level="project" />
   </component>
 </module>

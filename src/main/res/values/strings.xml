@@ -101,6 +101,18 @@
     <string name="app_update_error_patch">增量更新失败，请重新下载</string>
     <string name="app_update_error_rename">更新包重命名失败，请重新下载</string>
     <string name="msg_app_update_must_install">您当前的应用程序版本过低,必须更新到最新版本才能继续使用。</string>
+
+
+
+    <string name="dialog_title_check_app_db">正在检查基础数据</string>
+    <string name="dialog_title_update_app_db">正在更新....</string>
+    <string name="format_app_db_has_new_version">基础数据有更新(版本-%s)</string>
+    <string name="dialog_title_update_gen_app_db">同步并生成基础数据库</string>
+    <string name="update_data_success">更新成功</string>
+    <string name="update_data_failed">更新失败</string>
+    <string name="update_data_no_find_new_version">已经是最新了</string>
+
+    <string name="msg_update_app_db_restart_app">您需要重新打开APP使数据生效</string>
     <!-- 自动更新 end-->
 
     <!-- 登录注册 begin-->

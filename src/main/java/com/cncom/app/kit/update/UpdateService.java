@@ -122,6 +122,7 @@ public class UpdateService extends ComUpdateService {
         startActivity(i);
     }
 
+
     /**
      * 开始下载任务，需要提供要下载的apk的版本号，如果已经有正在下载的任务，
      * @param context

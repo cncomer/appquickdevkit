@@ -35,12 +35,12 @@ public class HomeObjectBase implements InfoInterface {
     };
 
     // home table
-    public static final String WHERE_HOME_ACCOUNTID = AppDBHelper.ACCOUNT_UID + "=?";
+    public static final String WHERE_HOME_ACCOUNT_UID = AppDBHelper.ACCOUNT_UID + "=?";
     public static final String WHERE_HOME_DEFAULT = AppDBHelper.IS_DEFAULT + "=1";
-    public static final String WHERE_HOME_ACCOUNTID_DEFAULT = WHERE_HOME_ACCOUNTID + " and " + WHERE_HOME_DEFAULT;
+    public static final String WHERE_HOME_ACCOUNT_UID_DEFAULT = WHERE_HOME_ACCOUNT_UID + " and " + WHERE_HOME_DEFAULT;
     public static final String WHERE_HOME_ADDRESS_ID = AppDBHelper.HOME_AID + "=?";
-    public static final String WHERE_UID_AND_AID = WHERE_HOME_ACCOUNTID + " and " + WHERE_HOME_ADDRESS_ID;
-    public static final String WHERE_ACCOUNT_ID_AND_HOME_ADDRESS_ID = WHERE_HOME_ACCOUNTID + " and " + WHERE_HOME_ADDRESS_ID;
+    public static final String WHERE_UID_AND_AID = WHERE_HOME_ACCOUNT_UID + " and " + WHERE_HOME_ADDRESS_ID;
+    public static final String WHERE_ACCOUNT_UID_AND_HOME_ADDRESS_ID = WHERE_HOME_ACCOUNT_UID + " and " + WHERE_HOME_ADDRESS_ID;
     public static final String[] HOME_PROJECTION = new String[]{
             AppDBHelper.ID,
             AppDBHelper.ACCOUNT_UID,        //1
@@ -270,14 +270,17 @@ public class HomeObjectBase implements InfoInterface {
 
 
     public static Cursor getAllHomesCursor(ContentResolver cr, String uid) {
-        return cr.query(BjnoteContent.Homes.CONTENT_URI, HOME_PROJECTION, WHERE_HOME_ACCOUNTID, new String[]{uid}, AppDBHelper.HOME_AID + " desc");
+        return cr.query(BjnoteContent.Homes.CONTENT_URI, HOME_PROJECTION, WHERE_HOME_ACCOUNT_UID, new String[]{uid}, AppDBHelper.HOME_AID + " desc");
+    }
+    public static Cursor getDefaultHomeCursor(ContentResolver cr, String uid) {
+        return cr.query(BjnoteContent.Homes.CONTENT_URI, HOME_PROJECTION, WHERE_HOME_ACCOUNT_UID_DEFAULT, new String[]{uid}, AppDBHelper.HOME_AID + " desc");
     }
     public static Cursor getHomeObjectCursor(ContentResolver cr, String uid, String aid) {
-       return cr.query(BjnoteContent.Homes.CONTENT_URI, HOME_PROJECTION, WHERE_ACCOUNT_ID_AND_HOME_ADDRESS_ID, new String[]{uid, aid}, null);
+       return cr.query(BjnoteContent.Homes.CONTENT_URI, HOME_PROJECTION, WHERE_ACCOUNT_UID_AND_HOME_ADDRESS_ID, new String[]{uid, aid}, null);
     }
 
     public static int deleteHome(ContentResolver cr, String uid, String aid) {
-        return cr.delete(BjnoteContent.Homes.CONTENT_URI, WHERE_ACCOUNT_ID_AND_HOME_ADDRESS_ID, new String[]{uid, aid});
+        return cr.delete(BjnoteContent.Homes.CONTENT_URI, WHERE_ACCOUNT_UID_AND_HOME_ADDRESS_ID, new String[]{uid, aid});
     }
 
     public void initHomeObjectFromCursor(Cursor c) {
@@ -394,7 +397,7 @@ public class HomeObjectBase implements InfoInterface {
         if (TextUtils.isEmpty(uid) || "-1".equals(uid)) {
             update = cr.update(BjnoteContent.Homes.CONTENT_URI, values,  null, null);
         } else if (TextUtils.isEmpty(aid) || "-1".equals(aid)) {
-            update = cr.update(BjnoteContent.Homes.CONTENT_URI, values,  WHERE_HOME_ACCOUNTID, new String[]{uid});
+            update = cr.update(BjnoteContent.Homes.CONTENT_URI, values,  WHERE_HOME_ACCOUNT_UID, new String[]{uid});
         } else {
             update = cr.update(BjnoteContent.Homes.CONTENT_URI, values,  WHERE_UID_AND_AID, new String[]{uid, aid});
         }
@@ -414,7 +417,7 @@ public class HomeObjectBase implements InfoInterface {
      * @return
      */
     public static int deleteAllHomesInDatabaseForAccount(ContentResolver cr, String uid) {
-        int deleted = cr.delete(BjnoteContent.Homes.CONTENT_URI, WHERE_HOME_ACCOUNTID, new String[]{uid});
+        int deleted = cr.delete(BjnoteContent.Homes.CONTENT_URI, WHERE_HOME_ACCOUNT_UID, new String[]{uid});
         DebugUtils.logD(TAG, "deleteAllHomesInDatabaseForAccount uid#" + uid + ", delete " + deleted);
         return deleted;
     }

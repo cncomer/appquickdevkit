@@ -140,6 +140,9 @@ public abstract class AbstractLoginOrUpdateAccountDialog extends Activity implem
 
         deleted = BjnoteContent.delete(contentResolver,BjnoteContent.CommonData.CONTENT_URI, null, null);
         DebugUtils.logD(TAG, "loginInClearEvent start to delete CommonData effected rows#" + deleted);
+
+		deleted = BjnoteContent.delete(contentResolver,BjnoteContent.Homes.CONTENT_URI, null, null);
+		DebugUtils.logD(TAG, "loginInClearEvent start to delete Homes effected rows#" + deleted);
     }
 
 

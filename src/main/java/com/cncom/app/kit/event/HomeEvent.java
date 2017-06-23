@@ -8,8 +8,9 @@ public class HomeEvent {
     public static final int NEW = 0;
     public static final int EDIT = 1;
     public static final int DELETE = 2;
-    public static final int REFRESH = 3;
-
+    /**刷新本地*/
+    public static final int REFRESH_LOCAL = 3;
+    public static final int REFRESH = 4;
     /**设置默认*/
     public static final int SetDefault = 4;
 }

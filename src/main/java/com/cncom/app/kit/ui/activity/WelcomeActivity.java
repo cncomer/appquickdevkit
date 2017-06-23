@@ -22,10 +22,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.cncom.app.kit.QADKApplication;
 import com.cncom.app.kit.FavorConfigBase;
+import com.cncom.app.kit.QADKApplication;
 import com.cncom.app.kit.R;
 import com.cncom.app.kit.update.UpdateActivity;
+import com.shwy.bestjoy.service.ComUpdateService;
 import com.shwy.bestjoy.utils.BitmapUtils;
 import com.shwy.bestjoy.utils.ComPreferencesManager;
 import com.shwy.bestjoy.utils.DebugUtils;
@@ -59,10 +60,13 @@ public class WelcomeActivity extends QADKActionbarActivity implements OnClickLis
 	private View mSplashView;
 
 	private TextView appVersionTextView;
+	private ServiceAppInfo databaseServiceAppInfo;
 
 	@Override
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
+
+		databaseServiceAppInfo = new ServiceAppInfo(mContext, mContext.getPackageName() + ".db");
 		mContext = this;
 		mHandler = new Handler();
 
@@ -316,8 +320,7 @@ public class WelcomeActivity extends QADKActionbarActivity implements OnClickLis
 	private void checkNeedInstallFiles() {
 		final SharedPreferences prefers = ComPreferencesManager.getInstance().mPreferManager;
 		final ServiceAppInfo databaseServiceAppInfo = new ServiceAppInfo(mContext, mContext.getPackageName() + ".db");
-		final File database = databaseServiceAppInfo.buildLocalDownloadAppFile();
-		final boolean needUpdateDeviceDatabase = database.exists() && databaseServiceAppInfo.mVersionCode > FavorConfigBase.getInstance().getDeviceDatabaseVersion();
+		final boolean needUpdateDeviceDatabase = databaseServiceAppInfo.mVersionCode > FavorConfigBase.getInstance().getDeviceDatabaseVersion();
 		final boolean firstStart = prefers.getBoolean(KEY_FIRST_STARTUP, true);
 		final boolean needReinstall = FavorConfigBase.getInstance().isNeedReinstallDeviceDatabase();
 		StringBuilder sb = new StringBuilder("launchMainActivityDelay()");
@@ -331,17 +334,47 @@ public class WelcomeActivity extends QADKActionbarActivity implements OnClickLis
 				DebugUtils.logD(TAG, "InitThread.run()");
 				//第一次的时候我们需要拷贝数据库
 				if (firstStart || needReinstall) {
+					DebugUtils.logD(TAG, "installFiles install app db");
+					FavorConfigBase.getInstance().updateDeviceDatabaseVersion(FavorConfigBase.getInstance().getBundledDeviceDatabaseVersion());
+
+					DebugUtils.logD(TAG, "installFiles, set app db mVersionCode=" + FavorConfigBase.getInstance().getBundledDeviceDatabaseVersion());
+					databaseServiceAppInfo.mVersionCode = FavorConfigBase.getInstance().getBundledDeviceDatabaseVersion();
+					databaseServiceAppInfo.save();
+
 					FilesUtils.installDatabaseFiles(mContext, "device", ".png", ".db");
 					if (firstStart) {
 						prefers.edit().putBoolean(KEY_FIRST_STARTUP, false).commit();
 					}
 					FavorConfigBase.getInstance().updateDeviceDatabaseVersion(-1);
 				} else if (needUpdateDeviceDatabase) {
-					if (FilesUtils.installFiles(database, getDatabasePath("device.db"))) {
-						DebugUtils.logD(TAG, "delete tem " + database.getAbsolutePath());
-						database.delete();
-						FavorConfigBase.getInstance().updateDeviceDatabaseVersion(databaseServiceAppInfo.mVersionCode);
+					File database = databaseServiceAppInfo.buildLocalDownloadAppFile();
+					if (database.exists()) {
+						if (FilesUtils.installFiles(database, getDatabasePath("device.db"))) {
+							DebugUtils.logD(TAG, "delete tem " + database.getAbsolutePath());
+							database.delete();
+							FavorConfigBase.getInstance().updateDeviceDatabaseVersion(databaseServiceAppInfo.mVersionCode);
+						}
+					} else {
+						new Thread(new Runnable() {
+							@Override
+							public void run() {
+								try {
+									mInitThread.join();
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}
+								QADKApplication.getInstance().postDelay(new Runnable() {
+									@Override
+									public void run() {
+										ComUpdateService.startUpdateAppDBActivity(WelcomeActivity.this);
+									}
+								}, 1300);
+
+
+							}
+						}).start();
 					}
+
 				}
 				
 //				if (!HomePageFragment20150104.ADS_FILE.exists()) {

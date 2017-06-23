@@ -31,6 +31,19 @@
             android:label="@string/menu_about" />
 
         <activity
+            android:configChanges="orientation"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.Base.Dialog"
+            android:name="com.cncom.app.kit.update.UpdateAppDBActivity" >
+            <!-- 通过这个，我们可以跳转到我们自定义的更新界面-->
+            <intent-filter>
+                <action android:name="${applicationId}.ACTION_VIEW_UPDATE_DB_ACTIVITY"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
+        <activity
             android:name="com.cncom.app.kit.ui.activity.FragmentHostActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize">

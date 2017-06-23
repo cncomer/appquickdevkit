@@ -35,6 +35,7 @@ public abstract class AbstractHomePageActivity extends QADKCenterTitleActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
         QADKAccountManager.getInstance().addAccountChangeCallback(this);
         FavorConfigBase.getInstance().mainActivity();
     }
@@ -62,6 +63,12 @@ public abstract class AbstractHomePageActivity extends QADKCenterTitleActivity
     public void onDestroy() {
         super.onDestroy();
         QADKAccountManager.getInstance().removeAccountChangeCallback(this);
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void exitApp(ExitAppEvent exitAppEvent) {
+        finish();
     }
 
     private Context getActivity() {

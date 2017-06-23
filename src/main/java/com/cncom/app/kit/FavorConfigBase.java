@@ -414,9 +414,16 @@ public class FavorConfigBase {
 //    public static final int LAST_DB_VERSION = 46;
     public static final String KEY_DB_VERSION = "db_version";
 
-    private static final int DB_VERSION = 47;//41
     public boolean isNeedReinstallDeviceDatabase() {
-        return DB_VERSION > getDeviceDatabaseVersion();
+        return getBundledDeviceDatabaseVersion() > getDeviceDatabaseVersion();
+    }
+
+    /**
+     * 返回apk打包的数据库版本,如果app需要更新数据库，需要实现该方法
+     * @return
+     */
+    public int getBundledDeviceDatabaseVersion() {
+        throw new RuntimeException("Sub class must override this method");
     }
 
     public int getDeviceDatabaseVersion() {
@@ -428,9 +435,6 @@ public class FavorConfigBase {
      * @return
      */
     public boolean updateDeviceDatabaseVersion(int version) {
-        if (version == -1) {
-            version = DB_VERSION;
-        }
         int oldVersion = getDeviceDatabaseVersion();
         DebugUtils.logD(TAG, "updateDeviceDatabaseVersion oldVersion " + oldVersion + ", newVersion " + version);
         if (version > oldVersion) {
