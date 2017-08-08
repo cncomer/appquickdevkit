@@ -17,7 +17,9 @@
     <item type="id" name="menu_refresh" />
     <item type="id" name="button_finish" />
 
+    <item type="id" name="menu_all" />
 
+    <item type="id" name="menu_add" />
 
 
     <!--刷新房间-->

@@ -73,7 +73,7 @@ public abstract class AbstractNewHomeFragment extends QADKFragment implements Vi
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        MenuItem homeItem = menu.add(R.string.menu_save, R.string.menu_save, 0, mHomeObject.mHomeAid > 0?R.string.button_update:R.string.menu_save);
+        MenuItem homeItem = menu.add(R.string.menu_save, R.string.menu_save, 0, mHomeObject.mHomeAid != -1 ?R.string.button_update:R.string.menu_save);
         MenuItemCompat.setShowAsAction(homeItem, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
     }
 

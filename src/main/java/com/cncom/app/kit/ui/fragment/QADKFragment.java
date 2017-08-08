@@ -16,6 +16,7 @@ import com.cncom.app.kit.ui.activity.QADKActionbarActivity;
 import com.shwy.bestjoy.utils.BitmapUtils;
 import com.shwy.bestjoy.utils.DebugUtils;
 import com.shwy.bestjoy.utils.InfoInterface;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.File;
 import java.util.HashMap;
@@ -237,7 +238,23 @@ public class QADKFragment extends Fragment {
    	}
    	
    	private HashMap<Integer, Dialog> mDialogMap = new HashMap<Integer, Dialog>();
-   	
+
+
+
+	//add by chenkai, 20140726 增加youmeng统计页面 begin
+	@Override
+	public void onResume() {
+		super.onResume();
+		DebugUtils.logD(TAG, "onResume() this=" + this.getClass().getSimpleName());
+		if (needMobclickAgentPage()) MobclickAgent.onPageStart(getMobclickAgentPageName()); //统计页面
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		DebugUtils.logD(TAG, "onPause() this=" + this.getClass().getSimpleName());
+		if (needMobclickAgentPage()) MobclickAgent.onPageEnd(getMobclickAgentPageName());
+	}
 
 	protected String getMobclickAgentPageName() {
 		return getClass().getSimpleName();

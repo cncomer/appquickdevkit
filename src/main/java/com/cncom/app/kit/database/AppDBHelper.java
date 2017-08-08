@@ -10,7 +10,7 @@ import com.shwy.bestjoy.utils.DebugUtils;
  * @author Sean Owen
  * @author chenkai
  */
-public final class AppDBHelper extends SQLiteOpenHelper {
+public class AppDBHelper extends SQLiteOpenHelper {
 private static final String TAG = "HaierDBHelper";
   private static final int DB_VERSION = 1;//release version 39
   private static final String DB_NAME = "kit.db";
@@ -118,6 +118,7 @@ private static final String TAG = "HaierDBHelper";
     public static final String TABLE_NAME_HOMES = "homes";
     /**地址id,每个地址的id,这个目前没用,要是更改地址的话可能会用到*/
     public static final String HOME_AID = "aid";
+    public static final String HOME_UUID = "uuid";
     public static final String HOME_NAME = "name";
     /**详细地址*/
     public static final String HOME_DETAIL = "home_detail";
@@ -378,6 +379,7 @@ private static final String TAG = "HaierDBHelper";
                         HOME_DETAIL + " TEXT, " +
                         IS_DEFAULT + " INTEGER NOT NULL DEFAULT 1, " +
                         POSITION + " INTEGER NOT NULL DEFAULT 1, " +
+                        HOME_UUID + " TEXT, " +
                         DATA1 + " TEXT, " +
                         DATA2 + " TEXT, " +
                         DATA3 + " TEXT, " +

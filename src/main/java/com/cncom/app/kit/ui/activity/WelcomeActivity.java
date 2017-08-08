@@ -48,7 +48,6 @@ public class WelcomeActivity extends QADKActionbarActivity implements OnClickLis
 	private View mButtonGo;
 	private Handler mHandler;
 	private boolean mShowWelcome = false;
-	private Context mContext;
 	private static final int DIALOG_MUST_INSTALL = 100001;
 	private static final int DIALOG_CONFIRM_INSTALL = 100002;
 	/**程序第一次启动*/
@@ -67,7 +66,6 @@ public class WelcomeActivity extends QADKActionbarActivity implements OnClickLis
 		super.onCreate(bundle);
 
 		databaseServiceAppInfo = new ServiceAppInfo(mContext, mContext.getPackageName() + ".db");
-		mContext = this;
 		mHandler = new Handler();
 
 		setContentView(R.layout.activity_welcome);

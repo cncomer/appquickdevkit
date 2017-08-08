@@ -14,6 +14,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
 
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <uses-permission android:name="${applicationId}.permission.ACCESS_POLICY" />
 
 
@@ -87,6 +89,38 @@
             android:exported="false">
         </activity>
 
+
+        <!-- 微信支付及分享-->
+        <!--<activity-->
+            <!--android:name="com.cncom.app.kit.wxapi.WXPayEntryActivity"-->
+            <!--android:exported="true"-->
+            <!--android:launchMode="singleTop"-->
+            <!--android:configChanges="orientation|keyboardHidden|screenSize">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="com.cncom.app.kit.ACTION_PAY_METHOD" />-->
+                <!--<category android:name="android.intent.category.DEFAULT" />-->
+                <!--<data-->
+                    <!--android:host="${applicationId}"-->
+                    <!--android:pathPrefix="/wxpay"-->
+                    <!--android:scheme="pay" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
+
+        <!--<activity-->
+            <!--android:name="com.cncom.app.kit.wxapi.WXEntryActivity"-->
+            <!--android:exported="true"-->
+            <!--android:launchMode="singleTop"-->
+            <!--android:configChanges="orientation|keyboardHidden|screenSize">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="com.cncom.app.kit.ACTION_" />-->
+                <!--<category android:name="android.intent.category.DEFAULT" />-->
+                <!--<data-->
+                    <!--android:host="${applicationId}"-->
+                    <!--android:pathPrefix="/wx"-->
+                    <!--android:scheme="pay" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
+
         <!-- provider begin-->
         <provider
             android:name="com.cncom.app.kit.database.BjnoteProvider"
@@ -132,6 +166,14 @@
             <!--android:value="@string/baidu_lbsapi_AppKey_release"-->
             <!--tools:replace="android:value"/>-->
 
+
+
+        <receiver android:name="com.cncom.app.kit.update.BootCompletedReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

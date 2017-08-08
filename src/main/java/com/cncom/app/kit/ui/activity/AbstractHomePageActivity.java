@@ -9,16 +9,21 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.view.MenuItem;
 
+import com.cncom.app.kit.FavorConfigBase;
 import com.cncom.app.kit.QADKAccountManager;
 import com.cncom.app.kit.QADKApplication;
-import com.cncom.app.kit.FavorConfigBase;
 import com.cncom.app.kit.R;
+import com.cncom.app.kit.event.ExitAppEvent;
 import com.cncom.app.kit.event.LoginOutEvent;
 import com.shwy.bestjoy.account.AbstractAccountObject;
 import com.shwy.bestjoy.account.IAccountChangeCallback;
 import com.shwy.bestjoy.utils.AsyncTaskCompat;
 import com.shwy.bestjoy.utils.AsyncTaskUtils;
 import com.shwy.bestjoy.utils.DebugUtils;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * 主界面抽象类，之类需要继承改类
@@ -37,7 +42,7 @@ public abstract class AbstractHomePageActivity extends QADKCenterTitleActivity
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
         QADKAccountManager.getInstance().addAccountChangeCallback(this);
-        FavorConfigBase.getInstance().mainActivity();
+        FavorConfigBase.getInstance().mainActivityOnCreate();
     }
 
 

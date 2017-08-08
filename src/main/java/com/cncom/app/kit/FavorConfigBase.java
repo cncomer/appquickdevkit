@@ -35,6 +35,7 @@ import com.shwy.bestjoy.utils.PhotoManagerUtilsV4;
 import com.shwy.bestjoy.utils.ServiceAppInfo;
 import com.shwy.bestjoy.utils.ServiceResultObject;
 import com.shwy.bestjoy.utils.SpinnerBinderUtils;
+import com.umeng.message.UmengNotificationClickHandler;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,7 +51,7 @@ import java.util.Set;
  * 产品配置文件
  * Created by bestjoy on 16/3/15.
  */
-public class FavorConfigBase {
+public class FavorConfigBase extends UmengNotificationClickHandler {
     private static final String TAG = "FavorConfigBase";
 
     private static FavorConfigBase INSTANCE = new FavorConfigBase();
@@ -84,6 +85,7 @@ public class FavorConfigBase {
     }
     /**Favor app init itself*/
     public  void initFromApplication() {
+        DebugUtils.logD(TAG, "initFromApplication()");
         DebugUtils.DEBUG = QADKApplication.getInstance().isInDebug();
         NetworkUtils.setDebugMode(DebugUtils.DEBUG);
         GzipNetworkUtils.setDebugMode(DebugUtils.DEBUG);
@@ -93,7 +95,24 @@ public class FavorConfigBase {
 
         PhotoManagerUtilsV4.setBlockDownload(false);
         registerWakeLock();
+
+        String processName = QADKApplication.getInstance().getCurProcessName();
+        if (mApplication.getPackageName().equals(processName)
+                || processName.equals(processName+":channel")) {
+            initPushSdk();
+        }
     }
+
+    /**
+     * 初始化PushSdk
+     */
+    protected void initPushSdk() {
+        DebugUtils.logD(TAG, "initPushSdk()");
+        YouMengMessageHelper.getInstance().setContext(mApplication);
+        YouMengMessageHelper.getInstance().startMobclickAgent(false);
+        YouMengMessageHelper.getInstance().startPushAgent();
+    }
+
     public void install() {
     }
 
@@ -155,7 +174,9 @@ public class FavorConfigBase {
     }
 
 
-
+    /**
+     * 如果不需要电源锁，子类可以覆盖该方法即可。默认会保持系统CPU运行
+     */
     protected void registerWakeLock() {
         if (mApplication.getPackageName().equals(QADKApplication.getInstance().getCurProcessName())) {
             if (!isRegisterWakeLock) {

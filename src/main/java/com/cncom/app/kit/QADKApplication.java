@@ -12,6 +12,7 @@ import android.webkit.CookieSyncManager;
 
 import com.bestjoy.app.common.qrcode.ScanInitializer;
 import com.cncom.app.kit.event.RefreshEventResult;
+import com.cncom.app.kit.utils.AlarmTaskUtils;
 import com.cncom.library.lbs.baidu.BaiduLocationManager;
 import com.shwy.bestjoy.ComApplication;
 import com.shwy.bestjoy.utils.AlertDialogWrapper;
@@ -61,6 +62,7 @@ public class QADKApplication extends ComApplication{
 		ComConnectivityManager.getInstance().setContext(this);
 		PhotoManagerUtilsV4.getInstance().setContext(this);
 		ComNotificationManager.getInstance().setContext(this);
+		AlarmTaskUtils.getInstance().setContext(this);
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
 			registerActivityLifecycleCallbacks(new QADKActivityLifecycleHandler());
 		}

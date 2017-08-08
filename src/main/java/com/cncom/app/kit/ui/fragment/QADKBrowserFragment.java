@@ -25,9 +25,11 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.ActionMenuView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -58,10 +60,11 @@ import java.lang.reflect.Field;
  * 
  * @author yeluosuifeng2005@gmail.com (Eric Chen)
  */
-public class QADKBrowserFragment extends QADKFragment {
+public class QADKBrowserFragment extends QADKFragment implements ActionMenuView.OnMenuItemClickListener{
 
 	private static final String TAG = "QADKBrowserFragment";
 	protected WebView webView;
+	protected ActionMenuView actionMenuView;
 	protected String mUrl;
 	protected String mStartUrl;
 	protected Toolbar mAppBar;
@@ -85,10 +88,17 @@ public class QADKBrowserFragment extends QADKFragment {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		CookieManager.getInstance().removeSessionCookie();
-		mUrl = getArguments().getString(Intents.EXTRA_URI);
-		mUrl = mUrl.trim();
-		mStartUrl = mUrl;
-		mIsDesktopSite = getArguments().getBoolean(EXTRA_DESKTOP_SITE, false);
+		initArgument();
+	}
+
+	protected void initArgument() {
+		Bundle bundle = getArguments();
+		if (bundle != null) {
+			mUrl = bundle.getString(Intents.EXTRA_URI);
+			mUrl = mUrl.trim();
+			mIsDesktopSite = bundle.getBoolean(EXTRA_DESKTOP_SITE, false);
+			mStartUrl = mUrl;
+		}
 	}
 
 
@@ -244,6 +254,9 @@ public class QADKBrowserFragment extends QADKFragment {
 
 	protected void initToolBar(View view) {
 		View appBarLayout = view.findViewById(R.id.app_bar_layout);
+
+		actionMenuView = (ActionMenuView) appBarLayout.findViewById(R.id.action_menu_view);
+		actionMenuView.setOnMenuItemClickListener(this);
 		TypedArray typedArray = getActivity().getTheme().obtainStyledAttributes(new int[] {
 				R.attr.homeAsUpIndicator,
 		});
@@ -286,6 +299,11 @@ public class QADKBrowserFragment extends QADKFragment {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	@Override
+	public boolean onMenuItemClick(MenuItem item) {
+		return false;
 	}
 
 	@Override

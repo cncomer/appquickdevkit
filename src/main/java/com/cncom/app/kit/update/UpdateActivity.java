@@ -526,6 +526,7 @@ public class UpdateActivity extends QADKActionbarActivity {
 	
 	public static Intent createIntent(Context context) {
 		Intent intent = new Intent(context, UpdateActivity.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		return intent;
 	}
 

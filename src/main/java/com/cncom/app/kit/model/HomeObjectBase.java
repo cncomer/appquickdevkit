@@ -39,12 +39,15 @@ public class HomeObjectBase implements InfoInterface {
     public static final String WHERE_HOME_DEFAULT = AppDBHelper.IS_DEFAULT + "=1";
     public static final String WHERE_HOME_ACCOUNT_UID_DEFAULT = WHERE_HOME_ACCOUNT_UID + " and " + WHERE_HOME_DEFAULT;
     public static final String WHERE_HOME_ADDRESS_ID = AppDBHelper.HOME_AID + "=?";
+    public static final String WHERE_HOME_ADDRESS_UUID = AppDBHelper.HOME_UUID + "=?";
     public static final String WHERE_UID_AND_AID = WHERE_HOME_ACCOUNT_UID + " and " + WHERE_HOME_ADDRESS_ID;
     public static final String WHERE_ACCOUNT_UID_AND_HOME_ADDRESS_ID = WHERE_HOME_ACCOUNT_UID + " and " + WHERE_HOME_ADDRESS_ID;
+    public static final String WHERE_ACCOUNT_UID_AND_HOME_ADDRESS_UUID = WHERE_HOME_ACCOUNT_UID + " and " + WHERE_HOME_ADDRESS_UUID;
     public static final String[] HOME_PROJECTION = new String[]{
             AppDBHelper.ID,
             AppDBHelper.ACCOUNT_UID,        //1
             AppDBHelper.HOME_AID,
+            AppDBHelper.HOME_UUID,
             DeviceDBHelper.DEVICE_PRO_NAME,
             DeviceDBHelper.DEVICE_CITY_NAME,
             DeviceDBHelper.DEVICE_DIS_NAME,
@@ -77,6 +80,7 @@ public class HomeObjectBase implements InfoInterface {
     public static final int KEY_HOME_ID = BASE_INDEX++;
     public static final int KEY_HOME_UID = BASE_INDEX++;
     public static final int KEY_HOME_AID = BASE_INDEX++;
+    public static final int KEY_HOME_UUID = BASE_INDEX++;
     public static final int KEY_HOME_PRO_NAME = BASE_INDEX++;
     public static final int KEY_HOME_CITY_NAME = BASE_INDEX++;
     public static final int KEY_HOME_DIS_NAME = BASE_INDEX++;
@@ -107,6 +111,9 @@ public class HomeObjectBase implements InfoInterface {
     public String mHomeUid = "";
     /**住址id,对应服务器上的数据项*/
     public long mHomeAid = -1;
+
+    /**住址的uuid,对应服务器上的数据项*/
+    public String mHomeUUID = "";
     /**本地_id数据字段值*/
     public long mHomeId = -1;
     public boolean mIsDefault = false;
@@ -129,6 +136,7 @@ public class HomeObjectBase implements InfoInterface {
         newHomeObject.mHomeAid = mHomeAid;
         newHomeObject.mHomeId = mHomeId;
         newHomeObject.mHomeUid = mHomeUid;
+        newHomeObject.mHomeUUID = mHomeUUID;
         newHomeObject.mHomeProvince = mHomeProvince;
         newHomeObject.mHomeCity = mHomeCity;
         newHomeObject.mHomeDis = mHomeDis;
@@ -158,6 +166,8 @@ public class HomeObjectBase implements InfoInterface {
         Bundle data = new Bundle();
 
         data.putLong("mHomeAid", mHomeAid);
+        data.putString("mHomeUUID", mHomeUUID);
+
         data.putLong("mHomeId", mHomeId);
         data.putString("mHomeUid", mHomeUid);
 
@@ -186,6 +196,7 @@ public class HomeObjectBase implements InfoInterface {
 
     protected void initHomeObjectFromBundle(Bundle data) {
         mHomeAid = data.getLong("mHomeAid", -1);
+        mHomeUUID = data.getString("mHomeUUID");
         mHomeId = data.getLong("mHomeId", -1);
         mHomeUid = data.getString("mHomeUid");
 
@@ -279,14 +290,23 @@ public class HomeObjectBase implements InfoInterface {
        return cr.query(BjnoteContent.Homes.CONTENT_URI, HOME_PROJECTION, WHERE_ACCOUNT_UID_AND_HOME_ADDRESS_ID, new String[]{uid, aid}, null);
     }
 
+    public static Cursor getHomeObjectCursorWithUUID(ContentResolver cr, String uid, String uuid) {
+        return cr.query(BjnoteContent.Homes.CONTENT_URI, HOME_PROJECTION, WHERE_ACCOUNT_UID_AND_HOME_ADDRESS_UUID, new String[]{uid, uuid}, null);
+    }
+
     public static int deleteHome(ContentResolver cr, String uid, String aid) {
         return cr.delete(BjnoteContent.Homes.CONTENT_URI, WHERE_ACCOUNT_UID_AND_HOME_ADDRESS_ID, new String[]{uid, aid});
+    }
+
+    public static int deleteHomeWithUUID(ContentResolver cr, String uid, String uuid) {
+        return cr.delete(BjnoteContent.Homes.CONTENT_URI, WHERE_ACCOUNT_UID_AND_HOME_ADDRESS_UUID, new String[]{uid, uuid});
     }
 
     public void initHomeObjectFromCursor(Cursor c) {
         mHomeId = c.getLong(KEY_HOME_ID);
         mHomeUid = c.getString(KEY_HOME_UID);
         mHomeAid = c.getLong(KEY_HOME_AID);
+        mHomeUUID = c.getString(KEY_HOME_UUID);
         mHomeProvince = c.getString(KEY_HOME_PRO_NAME);
         mHomeCity = c.getString(KEY_HOME_CITY_NAME);
         mHomeDis = c.getString(KEY_HOME_DIS_NAME);
@@ -377,8 +397,9 @@ public class HomeObjectBase implements InfoInterface {
                 DebugUtils.logD(TAG, "saveInDatebase failly update exsited aid#" + mHomeAid);
             }
         } else {
-            values.put(AppDBHelper.HOME_AID, mHomeAid);
-            values.put(AppDBHelper.ACCOUNT_UID, mHomeUid);
+            values.put(HOME_PROJECTION[KEY_HOME_AID], mHomeAid);
+            values.put(HOME_PROJECTION[KEY_HOME_UID], mHomeUid);
+            values.put(HOME_PROJECTION[KEY_HOME_UUID], mHomeUUID);
             Uri uri = cr.insert(BjnoteContent.Homes.CONTENT_URI, values);
             if (uri != null) {
                 DebugUtils.logD(TAG, "saveInDatebase insert aid#" + mHomeAid);
@@ -431,7 +452,7 @@ public class HomeObjectBase implements InfoInterface {
 
     public static HomeObjectBase parse(JSONObject jsonObject) {
         HomeObjectBase homeObjectBase = new HomeObjectBase();
-        homeObjectBase.mHomeAid = jsonObject.optLong("id", -1);
+        homeObjectBase.mHomeAid = jsonObject.optLong("record_id", -1);
         homeObjectBase.mHomeUid = jsonObject.optString("uid", "");
 
         homeObjectBase.mAdminCode = jsonObject.optString("address_admin_code", "");

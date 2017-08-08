@@ -42,6 +42,7 @@ public class AppGatewayRequestHelper {
             @Override
             public void onRequestCancelled() {
                 ServiceResultObject serviceResultObject = new ServiceResultObject();
+                serviceResultObject.mStatusCode = 0;
                 serviceResultObject.mStatusMessage = "Canceled by user";
                 callback.complete(serviceResultObject);
             }

@@ -22,7 +22,9 @@ import com.shwy.bestjoy.utils.ComPreferencesManager;
 import com.shwy.bestjoy.utils.DebugUtils;
 import com.shwy.bestjoy.utils.ServiceAppInfoCompat;
 
-
+/**
+ * @deprecated 请使用{@link #QADKAppAboutFragment} instead
+ */
 public class AppAboutActivity extends QADKActionbarActivity implements OnClickListener{
 
 	private static final String TAG = "AppAboutActivity";
