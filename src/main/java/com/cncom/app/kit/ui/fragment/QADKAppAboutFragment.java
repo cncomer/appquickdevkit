@@ -104,21 +104,35 @@ public class QADKAppAboutFragment extends QADKFragment implements OnClickListene
 		}
 
 
-		View checkView = view.findViewById(R.id.qrImage);
-		if (checkView != null && !TextUtils.isEmpty(mDownloadUrl)) {
-			initQrcodeView((ImageView) checkView);
-		}
+		initQrcodeView(view);
 
 	}
 
 
-	protected void initQrcodeView(ImageView imageView) {
-		mQrImage = imageView;
-		mQrImage.setOnClickListener(this);
+	protected void initQrcodeView(View view) {
+		View checkView = view.findViewById(R.id.qrImage);
 
+		if (checkView != null) {
+			mQrImage = (ImageView) checkView;
+			mQrImage.setOnClickListener(this);
+
+		}
+		checkView = view.findViewById(R.id.menu_share_app);
+		if (checkView != null) {
+			checkView.setOnClickListener(this);
+		}
+
+		genQrcodeBitmap(mDownloadUrl);
+	}
+
+
+	protected void genQrcodeBitmap(String url) {
+		if (TextUtils.isEmpty(url) || mQrImage == null) {
+			return;
+		}
 		int  mQrWhitePadding = (int) (4 * QADKApplication.getInstance().mDisplayMetrics.density + 0.5f);
-		int  size = (int) (160 * QADKApplication.getInstance().mDisplayMetrics.density + 0.5f);
-		QRGenerater qRGenerater = new QRGenerater(mDownloadUrl);
+		int  size = (int) (170 * QADKApplication.getInstance().mDisplayMetrics.density + 0.5f);
+		QRGenerater qRGenerater = new QRGenerater(url);
 		mQrImage.setAlpha(125);
 		qRGenerater.setDimens(size, size, mQrWhitePadding);
 		qRGenerater.setQRGeneratorFinishListener(new QRGenerater.QRGeneratorFinishListener() {
@@ -160,6 +174,9 @@ public class QADKAppAboutFragment extends QADKFragment implements OnClickListene
             QADKApplication.getInstance().copyToClipboard(YouMengMessageHelper.getInstance().getDeviceTotke());
             QADKApplication.getInstance().showMessage(getString(R.string.format_current_device_token_copy, YouMengMessageHelper.getInstance().getDeviceTotke()));
         } else if (i == R.id.qrImage || i == R.id.menu_share_app) {
+			if (TextUtils.isEmpty(mDownloadUrl)) {
+				return;
+			}
 			Intents.share(getActivity(), getActivity().getString(R.string.menu_share_app), mDownloadUrl);
 		}
 		
@@ -184,10 +201,16 @@ public class QADKAppAboutFragment extends QADKFragment implements OnClickListene
 		if (!TextUtils.isEmpty(downLoadUrl)) {
 			bundle.putString(EXTRA_DOWNLOAD_URL, downLoadUrl);
 		}
+
 		FragmentHostActivity.startActivity(context, bundle);
 	}
 
 	public static void startFragment(Context context, Bundle bundle) {
+		if (bundle == null) {
+			bundle = new Bundle();
+		}
+		bundle.putString(FragmentHostActivity.EXTRA_SHOW_FRAGMENT_CLASS_NAME, QADKAppAboutFragment.class.getName());
+		bundle.putString(Intents.EXTRA_TITLE, context.getString(R.string.menu_about));
 		startFragment(context, context.getString(R.string.app_download_url), bundle);
 	}
 }

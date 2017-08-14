@@ -21,6 +21,10 @@
 
     <item type="id" name="menu_add" />
 
+    <!--分享APP菜单ID -->
+    <item type="id" name="menu_share_app" />
+
+
 
     <!--刷新房间-->
     <item type="id" name="event_home_changed" />

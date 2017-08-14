@@ -17,11 +17,14 @@ import android.view.MenuItem;
 
 import com.cncom.app.kit.QADKApplication;
 import com.cncom.app.kit.R;
+import com.cncom.app.kit.event.UserInteractionEvent;
 import com.cncom.lib.umeng.YouMengMessageHelper;
 import com.shwy.bestjoy.utils.BitmapUtils;
 import com.shwy.bestjoy.utils.DebugUtils;
 import com.shwy.bestjoy.utils.Intents;
 import com.umeng.analytics.MobclickAgent;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 
@@ -289,5 +292,14 @@ public abstract class QADKActionbarActivity extends AppCompatActivity {
 
 	protected boolean isSupportSwipeBack() {
 		return true;
+	}
+
+
+	@Override
+	public void onUserInteraction() {
+		super.onUserInteraction();
+		UserInteractionEvent userInteractionEvent = new UserInteractionEvent();
+		userInteractionEvent.activity = this;
+		EventBus.getDefault().post(userInteractionEvent);
 	}
 }

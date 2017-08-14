@@ -10,72 +10,80 @@
 		android:layout_height="0dip"
 		android:layout_weight="1.0"
 		android:fillViewport="true">
+
 		<LinearLayout
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:orientation="vertical">
 
 			<ImageView
-				android:layout_height="90dip"
 				android:layout_width="90dip"
+				android:layout_height="90dip"
+				android:layout_gravity="center_horizontal"
 				android:layout_marginTop="30dip"
 				android:scaleType="fitCenter"
-				android:layout_gravity="center_horizontal"
-				android:src="@drawable/icon_launcher"/>
-			<TextView android:id="@+id/app_name"
-				android:layout_height="wrap_content"
+				android:src="@drawable/icon_launcher" />
+
+			<TextView
+				android:id="@+id/app_name"
 				android:layout_width="wrap_content"
-				android:textColor="@color/blk"
-				android:layout_marginTop="4dip"
+				android:layout_height="wrap_content"
 				android:layout_gravity="center_horizontal"
-				android:textSize="20sp"
-				android:text="@string/app_name_version"/>
+				android:layout_marginTop="4dip"
+				android:text="@string/app_name_version"
+				android:textColor="@color/blk"
+				android:textSize="20sp" />
 
 			<RelativeLayout
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
 				android:layout_marginTop="4dip">
-				<TextView android:id="@+id/app_version_name"
-					android:layout_height="wrap_content"
-					android:layout_width="wrap_content"
-					android:textColor="#ff366d94"
-					android:text="V1.3"
-					android:layout_centerHorizontal="true"
-					android:textSize="16sp"/>
 
-				<TextView android:id="@+id/app_new_version_name"
-					android:layout_height="wrap_content"
+				<TextView
+					android:id="@+id/app_version_name"
 					android:layout_width="wrap_content"
-					android:textColor="#ffffffff"
-					android:text="@string/format_new_version_tip"
-					android:background="@drawable/new_red_dot_flag"
-					android:layout_toRightOf="@+id/app_version_name"
-					android:layout_marginLeft="6dip"
+					android:layout_height="wrap_content"
+					android:layout_centerInParent="true"
+					android:text="V1.3"
+					android:textColor="#ff366d94"
+					android:textSize="16sp" />
+
+				<TextView
+					android:id="@+id/app_new_version_name"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
 					android:layout_gravity="center_horizontal"
+					android:layout_marginLeft="6dip"
+					android:layout_toRightOf="@+id/app_version_name"
+					android:background="@drawable/new_red_dot_flag"
 					android:gravity="center"
-					android:textSize="16sp"/>
+					android:text="@string/format_new_version_tip"
+					android:textColor="#ffffffff"
+					android:textSize="16sp" />
 			</RelativeLayout>
 
-			<TextView android:id="@+id/app_db_version_name"
-				android:layout_height="wrap_content"
+			<TextView
+				android:id="@+id/app_db_version_name"
 				android:layout_width="wrap_content"
-				android:textColor="#ff366d94"
-				android:layout_marginTop="4dip"
+				android:layout_height="wrap_content"
 				android:layout_gravity="center_horizontal"
+				android:layout_marginTop="4dip"
 				android:text="V1.3"
-				android:textSize="16sp"/>
+				android:textColor="#ff366d94"
+				android:textSize="16sp" />
 
-			<TextView android:id="@+id/app_device_token"
-				android:layout_height="wrap_content"
+			<TextView
+				android:id="@+id/app_device_token"
 				android:layout_width="wrap_content"
-				android:layout_marginTop="4dip"
+				android:layout_height="wrap_content"
 				android:layout_gravity="center_horizontal"
-				android:textSize="16sp"
-				android:text="@string/msg_current_device_token_null"/>
+				android:layout_marginTop="4dip"
+				android:text="@string/msg_current_device_token_null"
+				android:textSize="16sp" />
 
 			<android.support.v4.widget.Space
 				android:layout_width="fill_parent"
-				android:layout_height="30dip" />
+				android:layout_height="20dip" />
 
 			<ImageView
 				android:id="@+id/qrImage"
@@ -84,14 +92,15 @@
 				android:layout_gravity="center_horizontal"
 				android:scaleType="center" />
 
-			<Button android:id="@+id/menu_share_app"
+			<Button
+				android:id="@+id/menu_share_app"
+				style="@style/DefaultShapeButton.Blue"
 				android:layout_width="160dip"
 				android:layout_height="wrap_content"
-				style="@style/DefaultShapeButton.Blue"
-				android:textSize="14sp"
-				android:layout_marginTop="10dip"
 				android:layout_gravity="center_horizontal"
-				android:text="@string/menu_share_app" />
+				android:layout_marginTop="10dip"
+				android:text="@string/menu_share_app"
+				android:textSize="14sp" />
 
 
 		</LinearLayout>
@@ -99,7 +108,7 @@
 
 	<TextView android:id="@+id/copyright"
 		android:layout_width="fill_parent"
-		android:layout_height="40dip"
+		android:layout_height="60dip"
 		android:orientation="vertical"
 		android:text="@string/copyright"
 		android:gravity="center"/>

@@ -48,10 +48,13 @@ public class QADKCenterTitleActivity extends QADKActionbarActivity {
     public void setTitle(CharSequence title) {
         super.setTitle(title);
         ActionBar actionBar = getSupportActionBar();
-        int showCustom = actionBar.getDisplayOptions() & ActionBar.DISPLAY_SHOW_CUSTOM;
-        if (mActionBarCustomView != null && showCustom > 0) {
-            mActionBarCustomView.setText(title);
+        if (actionBar != null) {
+            int showCustom = actionBar.getDisplayOptions() & ActionBar.DISPLAY_SHOW_CUSTOM;
+            if (mActionBarCustomView != null && showCustom > 0) {
+                mActionBarCustomView.setText(title);
+            }
         }
+
     }
 
     @Override

@@ -161,4 +161,10 @@ public class QADKWifiManager {
 
         return "";
     }
+
+
+    public String getMac() {
+        WifiInfo info = wifiManager.getConnectionInfo();
+        return info.getMacAddress();
+    }
 }

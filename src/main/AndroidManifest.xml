@@ -106,20 +106,28 @@
             <!--</intent-filter>-->
         <!--</activity>-->
 
-        <!--<activity-->
-            <!--android:name="com.cncom.app.kit.wxapi.WXEntryActivity"-->
-            <!--android:exported="true"-->
-            <!--android:launchMode="singleTop"-->
-            <!--android:configChanges="orientation|keyboardHidden|screenSize">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="com.cncom.app.kit.ACTION_" />-->
-                <!--<category android:name="android.intent.category.DEFAULT" />-->
-                <!--<data-->
-                    <!--android:host="${applicationId}"-->
-                    <!--android:pathPrefix="/wx"-->
-                    <!--android:scheme="pay" />-->
-            <!--</intent-filter>-->
-        <!--</activity>-->
+        <activity
+            android:name="com.cncom.app.kit.wxapi.WXEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:configChanges="orientation|keyboardHidden|screenSize">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
+        <activity-alias
+            android:targetActivity="com.cncom.app.kit.wxapi.WXEntryActivity"
+            android:name="${applicationId}.wxapi.WXEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:configChanges="orientation|keyboardHidden|screenSize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity-alias>
 
         <!-- provider begin-->
         <provider
