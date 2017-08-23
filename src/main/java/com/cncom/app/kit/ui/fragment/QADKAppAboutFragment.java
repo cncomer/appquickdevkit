@@ -81,7 +81,7 @@ public class QADKAppAboutFragment extends QADKFragment implements OnClickListene
 		mDeviceToken = (TextView) view.findViewById(R.id.app_device_token);
 
 		mNewVersionName = (TextView) view.findViewById(R.id.app_new_version_name);
-
+		mNewVersionName.setOnClickListener(this);
 		mVersionName.setText(getString(R.string.format_current_sw_version, mCurrentVersionCodeName));
 		mDbVersionName.setText(getString(R.string.format_current_db_version, String.valueOf(FavorConfigBase.getInstance().getDeviceDatabaseVersion())));
 		String deviceToken = YouMengMessageHelper.getInstance().getDeviceTotke();

@@ -25,6 +25,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.widget.ActionMenuView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -38,6 +39,8 @@ import android.webkit.CookieSyncManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -53,6 +56,8 @@ import com.shwy.bestjoy.utils.DebugUtils;
 import com.shwy.bestjoy.utils.Intents;
 
 import java.lang.reflect.Field;
+
+import static com.cncom.app.kit.R.id.webview;
 
 
 /**
@@ -113,8 +118,19 @@ public class QADKBrowserFragment extends QADKFragment implements ActionMenuView.
 		super.onViewCreated(view, savedInstanceState);
 
 		initToolBar(view);
+		webView = (WebView) view.findViewById(webview);
+		initWebView(webView);
+	}
 
-		webView = (WebView) view.findViewById(R.id.webview);
+
+
+
+	/**
+	 * 初始化webview
+	 * @param webView
+	 */
+	protected void initWebView(WebView webView) {
+
 
 		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
 			if(QADKApplication.getInstance().isInDebug()){
@@ -155,6 +171,11 @@ public class QADKBrowserFragment extends QADKFragment implements ActionMenuView.
 		webView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
 //		webView.getSettings().setPluginState(WebSettings.PluginState.ON);
 		webView.getSettings().setAllowFileAccess(true);
+//		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+//			webView.getSettings().setAllowFileAccessFromFileURLs(true);
+//			webView.getSettings().setAllowUniversalAccessFromFileURLs(true);
+//		}
+
 //		webView.getSettings().setAllowFileAccessFromFileURLs(true);
 		webView.getSettings().setSupportZoom(true);
 
@@ -191,11 +212,7 @@ public class QADKBrowserFragment extends QADKFragment implements ActionMenuView.
 			@Override
 			public void onReceivedTitle(WebView view, String title){
 				super.onReceivedTitle(view, title);
-				if (mAppBar != null) {
-					mAppBar.setTitle(title);
-				} else {
-					getActivity().setTitle(title);
-				}
+				overrideReceivedTitle(view, title);
 
 			}
 
@@ -260,7 +277,11 @@ public class QADKBrowserFragment extends QADKFragment implements ActionMenuView.
 		TypedArray typedArray = getActivity().getTheme().obtainStyledAttributes(new int[] {
 				R.attr.homeAsUpIndicator,
 		});
-		homeAsUpIndicator = typedArray.getDrawable(0);
+		final int resourceId = typedArray.getResourceId(0, 0);
+		if (resourceId != 0) {
+			homeAsUpIndicator = AppCompatResources.getDrawable(getActivity(), resourceId);
+		}
+//		homeAsUpIndicator = typedArray.getDrawable(0);
 
 		if (appBarLayout != null) {
 			mProgressBar = (ProgressBar) view.findViewById(R.id.progressbar);
@@ -301,6 +322,10 @@ public class QADKBrowserFragment extends QADKFragment implements ActionMenuView.
 		}
 	}
 
+    protected void prepareData() {
+        loadUrl(mUrl);
+    }
+
 	@Override
 	public boolean onMenuItemClick(MenuItem item) {
 		return false;
@@ -309,7 +334,7 @@ public class QADKBrowserFragment extends QADKFragment implements ActionMenuView.
 	@Override
 	public void onStart() {
 		super.onStart();
-		loadUrl(mUrl);
+		prepareData();
 	}
 
 	protected void loadUrl(String url) {
@@ -373,17 +398,68 @@ public class QADKBrowserFragment extends QADKFragment implements ActionMenuView.
 //		public void onFormResubmission(WebView view, Message dontResend, Message resend) {
 //			resend.sendToTarget();
 //		}
+
+
+		@Override
+		public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+				WebResourceResponse webResourceResponse = QADKBrowserFragment.this.shouldInterceptRequest(view, url);
+				if (webResourceResponse != null) {
+					DebugUtils.logW(TAG, "shouldInterceptRequest local find " + url);
+					return webResourceResponse;
+				}
+			}
+			return super.shouldInterceptRequest(view, url);
+		}
+
+		@Override
+		public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+				WebResourceResponse webResourceResponse = QADKBrowserFragment.this.shouldInterceptRequest(view, request.getUrl().toString());
+				if (webResourceResponse != null) {
+					return webResourceResponse;
+				}
+			}
+			return super.shouldInterceptRequest(view, request);
+		}
 	}
 
 	protected void overrideReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+		DebugUtils.logD(TAG, "overrideReceivedError errorCode=" + errorCode+",description=" + description+",failingUrl="+failingUrl);
+	}
 
+
+	/**
+	 * 接收到网页的标题
+	 * @param view
+	 * @param title
+	 */
+	public void overrideReceivedTitle(WebView view, String title) {
+		if (mAppBar != null) {
+			mAppBar.setTitle(title);
+		} else {
+			getActivity().setTitle(title);
+		}
+	}
+
+
+	/**
+	 * 是否使用本地的资源
+	 * @param view
+	 * @param resouceUrl
+	 * @return
+	 */
+	protected WebResourceResponse shouldInterceptRequest(WebView view, String resouceUrl) {
+		DebugUtils.logD(TAG, "shouldInterceptRequest resouceUrl=" + resouceUrl);
+		return null;
 	}
 
 	/**
 	 * 网页加载完成
      */
 	public void overridePageFinished(WebView view, String url) {
-
+		DebugUtils.logD(TAG, "overridePageFinished " + url);
 	}
 
 	protected boolean overrideUrlLoading(WebView view, String url) {
@@ -430,6 +506,9 @@ public class QADKBrowserFragment extends QADKFragment implements ActionMenuView.
 	}
 
 	private void setAppBarProgress(int progress) {
+		if (mProgressBar == null) {
+			return;
+		}
 		DebugUtils.logD(TAG, "setAppBarProgress " + progress);
 		if (progress >= 100) {
 			if (mProgressBar != null) {
