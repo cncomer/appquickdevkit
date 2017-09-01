@@ -79,9 +79,12 @@ public class QADKBrowserFragment extends QADKFragment implements ActionMenuView.
 	private boolean mIsDesktopSite = false;
 	public static final String EXTRA_DESKTOP_SITE = "desktopsite";
 
-	private ProgressBar mProgressBar;
+	protected ProgressBar mProgressBar;
 
 	protected Drawable homeAsUpIndicator;
+
+	/**网页是否加载完成*/
+	protected boolean onPageFinished = false;
 
 	protected final Button.OnClickListener backListener = new Button.OnClickListener() {
 		public void onClick(View view) {
@@ -120,6 +123,8 @@ public class QADKBrowserFragment extends QADKFragment implements ActionMenuView.
 		initToolBar(view);
 		webView = (WebView) view.findViewById(webview);
 		initWebView(webView);
+
+		prepareData();
 	}
 
 
@@ -331,12 +336,6 @@ public class QADKBrowserFragment extends QADKFragment implements ActionMenuView.
 		return false;
 	}
 
-	@Override
-	public void onStart() {
-		super.onStart();
-		prepareData();
-	}
-
 	protected void loadUrl(String url) {
 		if (!TextUtils.isEmpty(url)) {
 			if (url.startsWith("http://")
@@ -353,6 +352,7 @@ public class QADKBrowserFragment extends QADKFragment implements ActionMenuView.
 		@Override
 		public void onPageFinished(WebView view, String url) {
 			super.onPageFinished(view, url);
+			onPageFinished = true;
 			overridePageFinished(view, url);
 			if (webView.canGoBack()) {
 				if (finishBtn != null) {
@@ -373,6 +373,7 @@ public class QADKBrowserFragment extends QADKFragment implements ActionMenuView.
 		@Override
 		public void onPageStarted(WebView view, String url, Bitmap favicon) {
 			super.onPageStarted(view, url, favicon);
+			onPageFinished = false;
 			 // reset sync timer to avoid sync starts during loading a page
             CookieSyncManager.getInstance().resetSync();
 		}

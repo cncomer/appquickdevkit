@@ -41,6 +41,7 @@ public class SimpleCommonDataObjectImpl extends CommonDataObject {
     public void initFromCursor(Cursor cursor) {
         uid = cursor.getString(INDEX_uid);
         sid = cursor.getLong(INDEX_sid);
+        mId = cursor.getLong(INDEX_ID);
         dataType = cursor.getString(INDEX_COMMON_DATA5_DATA_TYPE);
         initFromJsonObjectString(cursor.getString(INDEX_src_content));
     }

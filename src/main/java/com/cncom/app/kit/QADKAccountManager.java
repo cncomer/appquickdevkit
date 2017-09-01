@@ -3,8 +3,11 @@ package com.cncom.app.kit;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.cncom.app.kit.event.LoginInEvent;
+import com.cncom.app.kit.event.LoginOutEvent;
 import com.shwy.bestjoy.ComApplication;
 import com.shwy.bestjoy.account.AbstractAccountManager;
+import com.shwy.bestjoy.account.AbstractAccountObject;
 import com.shwy.bestjoy.utils.SecurityUtils;
 
 /**
@@ -55,5 +58,21 @@ public class QADKAccountManager extends AbstractAccountManager{
         // Always return the cached database, if we've got one
 
         throw new RuntimeException("sub class must override method getAppDatabase()");
+    }
+
+    @Override
+    public synchronized void notifyAccountChange(AbstractAccountObject accountObject) {
+        super.notifyAccountChange(accountObject);
+
+        if (accountObject != null) {
+            LoginInEvent loginInEvent = new LoginInEvent();
+            loginInEvent.object = accountObject;
+            FavorConfigBase.getInstance().dealEvent(loginInEvent);
+        } else {
+            LoginOutEvent loginOutEvent = new LoginOutEvent();
+            FavorConfigBase.getInstance().dealEvent(loginOutEvent);
+
+        }
+
     }
 }
