@@ -123,7 +123,6 @@ public class QADKBrowserFragment extends QADKFragment implements ActionMenuView.
 		initToolBar(view);
 		webView = (WebView) view.findViewById(webview);
 		initWebView(webView);
-
 		prepareData();
 	}
 
@@ -403,6 +402,7 @@ public class QADKBrowserFragment extends QADKFragment implements ActionMenuView.
 
 		@Override
 		public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
+			DebugUtils.logW(TAG, "shouldInterceptRequest url= " + url);
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 				WebResourceResponse webResourceResponse = QADKBrowserFragment.this.shouldInterceptRequest(view, url);
 				if (webResourceResponse != null) {

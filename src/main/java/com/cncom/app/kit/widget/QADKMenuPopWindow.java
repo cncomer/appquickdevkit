@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.PopupWindow;
 import com.baidu.panosdk.plugin.indoor.util.ScreenUtils;
 import com.cncom.app.kit.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,7 +28,12 @@ public abstract class QADKMenuPopWindow extends PopupWindow {
     protected LayoutInflater layoutInflater;
     protected GridView contentGridView;
     protected Context context;
-    private int numColumns = 3;
+    protected int numColumns = -1;
+
+    protected int colorIntTint = -1;
+
+    protected List<AppMenuItem> menuItems = new ArrayList<>(10);
+    private MenuAdapter menuAdapter;
 
     private AdapterView.OnItemClickListener onItemClickListener;
 
@@ -43,18 +50,40 @@ public abstract class QADKMenuPopWindow extends PopupWindow {
         setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
 
+        menuAdapter = new MenuAdapter();
+        contentGridView.setAdapter(menuAdapter);
+        contentGridView.setOnItemClickListener(menuAdapter);
 
     }
 
-    @Override
-    public void setBackgroundDrawable(Drawable background) {
+    public void setColorIntTint(int colorIntTint) {
+        this.colorIntTint = colorIntTint;
+        if (menuItems.size() > 0) {
+            colorTintMenus();
+            menuAdapter.notifyDataSetChanged();
+        }
+
+    }
+
+
+    private void colorTintMenus() {
+        for (AppMenuItem menuItem : menuItems) {
+            if (colorIntTint != -1) {
+                Drawable drawableCompat = DrawableCompat.wrap(menuItem.icon);
+                DrawableCompat.setTint(drawableCompat, colorIntTint);
+                menuItem.icon = drawableCompat;
+            }
+        }
+    }
+    public void setContentBackgroundDrawable(Drawable background) {
         contentGridView.setBackgroundDrawable(background);
     }
 
     public void setMenus(List<AppMenuItem> menus) {
-        MenuAdapter menuAdapter = new MenuAdapter(menus);
-        contentGridView.setAdapter(menuAdapter);
-        contentGridView.setOnItemClickListener(menuAdapter);
+        this.menuItems = menus;
+        colorTintMenus();
+        menuAdapter.notifyDataSetChanged();
+
     }
 
     public void setOnItemClickListener(AdapterView.OnItemClickListener onItemClickListener) {
@@ -64,7 +93,9 @@ public abstract class QADKMenuPopWindow extends PopupWindow {
 
     public void setNumColumns(int numColumns) {
         this.numColumns = numColumns;
-        contentGridView.setNumColumns(numColumns);
+        if (numColumns > 0 ) {
+            contentGridView.setNumColumns(numColumns);
+        }
     }
 
     public int getNumColumns() {
@@ -120,24 +151,23 @@ public abstract class QADKMenuPopWindow extends PopupWindow {
 
 
     private class MenuAdapter extends BaseAdapter implements AdapterView.OnItemClickListener{
-        private List<AppMenuItem> menus;
-        public MenuAdapter(List<AppMenuItem> menus) {
-            this.menus = menus;
-        }
 
         @Override
         public int getCount() {
-            return menus.size();
+            if (menuItems == null) {
+                return 0;
+            }
+            return menuItems.size();
         }
 
         @Override
         public AppMenuItem getItem(int position) {
-            return menus.get(position);
+            return menuItems.get(position);
         }
 
         @Override
         public long getItemId(int position) {
-            return getItem(position).getItemId();
+            return getItem(position).getItemCode();
         }
 
         @Override
@@ -154,6 +184,7 @@ public abstract class QADKMenuPopWindow extends PopupWindow {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             if (onItemClickListener != null) {
                 onItemClickListener.onItemClick(parent, view, position, id);
+
             }
             dismiss();
         }

@@ -23,6 +23,7 @@ public class JsBridgeBrowserFragment extends QADKBrowserFragment {
     }
 
     protected WebResourceResponse shouldInterceptRequest(WebView view, String resouceUrl) {
+        DebugUtils.logD(TAG, "shouldInterceptRequest resouceUrl= " + resouceUrl);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             if(resouceUrl.endsWith("echarts-all-3.min.js")
                     || resouceUrl.endsWith("jquery-1.11.3.min.js")){//加载指定xxx.js时 引导服务端加载本地Assets/www文件夹下的对应xxx.js

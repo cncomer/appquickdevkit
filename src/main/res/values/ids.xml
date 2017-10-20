@@ -29,4 +29,7 @@
     <!--刷新房间-->
     <item type="id" name="event_home_changed" />
     <item type="id" name="event_home_info_changed" />
+
+    <!-- 登录后同步历史数据 -->
+    <item type="id" name="login_sync_histories" />
 </resources>

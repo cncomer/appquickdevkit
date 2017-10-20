@@ -10,18 +10,20 @@ import com.shwy.bestjoy.account.AbstractAccountManager;
 import com.shwy.bestjoy.account.AbstractAccountObject;
 import com.shwy.bestjoy.utils.SecurityUtils;
 
+import org.greenrobot.eventbus.EventBus;
+
 /**
  * Created by bestjoy on 2017/5/3.
  */
 
 public class QADKAccountManager extends AbstractAccountManager{
-    private static final String TAG = "BaseAccountManager";
+    private static final String TAG = "QADKAccountManager";
 
     public static QADKAccountManager INSTANCE;
 
     public static synchronized QADKAccountManager getInstance() {
         if (INSTANCE == null) {
-            throw new RuntimeException("sub class must call setInstance()");
+            throw new RuntimeException("QADKAccountManager sub class must call setInstance() in Application.onCreate()");
         }
         return INSTANCE;
     }
@@ -32,7 +34,7 @@ public class QADKAccountManager extends AbstractAccountManager{
 
     @Override
     public synchronized void initAccountObject() {
-        throw new RuntimeException("sub class must override method initAccountObject()");
+        throw new RuntimeException("QADKAccountManager sub class must override method initAccountObject()");
     }
 
     @Override
@@ -68,9 +70,12 @@ public class QADKAccountManager extends AbstractAccountManager{
             LoginInEvent loginInEvent = new LoginInEvent();
             loginInEvent.object = accountObject;
             FavorConfigBase.getInstance().dealEvent(loginInEvent);
+
+            EventBus.getDefault().post(loginInEvent);
         } else {
             LoginOutEvent loginOutEvent = new LoginOutEvent();
             FavorConfigBase.getInstance().dealEvent(loginOutEvent);
+            EventBus.getDefault().post(loginOutEvent);
 
         }
 

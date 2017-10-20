@@ -181,8 +181,8 @@ private static final String TAG = "HaierDBHelper";
       createCommonTable(sqLiteDatabase);
 
   }
-  
-  private void createTriggerForAccountTable(SQLiteDatabase sqLiteDatabase) {
+
+    protected void createTriggerForAccountTable(SQLiteDatabase sqLiteDatabase) {
 	  String sql = "CREATE TRIGGER insert_account" + " BEFORE INSERT " + " ON " + TABLE_NAME_ACCOUNTS + 
 			  " BEGIN UPDATE " + TABLE_NAME_ACCOUNTS + " SET isDefault = 0 WHERE uid != new.uid and isDefault = 1; END;";
 	  sqLiteDatabase.execSQL(sql);
@@ -193,7 +193,7 @@ private static final String TAG = "HaierDBHelper";
 	  
   }
   
-  private void createAccountTable(SQLiteDatabase sqLiteDatabase) {
+  protected void createAccountTable(SQLiteDatabase sqLiteDatabase) {
 	  sqLiteDatabase.execSQL(
 	            "CREATE TABLE " + TABLE_NAME_ACCOUNTS + " (" +
 	            ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -234,7 +234,7 @@ private static final String TAG = "HaierDBHelper";
    * {"msg_id":"us65502140752348982811","body":{"play_vibrate":"true","text":"111112222","title":"1111","ticker":"1111","play_lights":"true","play_sound":"true","after_open":"go_app","activity":"","url":"","custom":""},"random_min":0,"alias":"","display_type":"notification"}
    * @param sqLiteDatabase
    */
-  private void createYoumengMessageTable(SQLiteDatabase sqLiteDatabase) {
+  protected void createYoumengMessageTable(SQLiteDatabase sqLiteDatabase) {
 	  sqLiteDatabase.execSQL(
 	            "CREATE TABLE " + TABLE_YOUMENG_PUSHMESSAGE_HISTORY + " (" +
 	            ID + " INTEGER PRIMARY KEY, " +
@@ -366,7 +366,7 @@ private static final String TAG = "HaierDBHelper";
     }
 
 
-    private void createHomesTable(SQLiteDatabase sqLiteDatabase) {
+    protected void createHomesTable(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(
                 "CREATE TABLE " + TABLE_NAME_HOMES + " (" +
                         ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -404,15 +404,14 @@ private static final String TAG = "HaierDBHelper";
                         ");");
     }
 
-  
-  private void addTextColumn(SQLiteDatabase sqLiteDatabase, String table, String column) {
+    public static void addTextColumn(SQLiteDatabase sqLiteDatabase, String table, String column) {
 	    String alterForTitleSql = "ALTER TABLE " + table +" ADD " + column + " TEXT";
 		sqLiteDatabase.execSQL(alterForTitleSql);
-  }
-  private void addIntColumn(SQLiteDatabase sqLiteDatabase, String table, String column, int defaultValue) {
+    }
+    public static void addIntColumn(SQLiteDatabase sqLiteDatabase, String table, String column, int defaultValue) {
 	    String alterForTitleSql = "ALTER TABLE " + table +" ADD " + column + " INTEGER NOT NULL DEFAULT " + defaultValue;
 		sqLiteDatabase.execSQL(alterForTitleSql);
-}
+    }
 
   @Override
   public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {

@@ -10,7 +10,7 @@ public class LoginOutEvent {
     /**
      * 登录成功清理事件，一般在非UI线程中处理
      */
-    public static class LoginOutOnMainThreadEvent {
+    public static class LoginOutFinishEvent {
         public Object object;
     }
 }

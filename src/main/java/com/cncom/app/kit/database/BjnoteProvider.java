@@ -8,6 +8,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -298,4 +299,36 @@ public class BjnoteProvider extends ContentProvider{
 	}
 
 
+
+
+	@Override
+	public int bulkInsert(Uri uri, ContentValues[] values) {
+		// Do something.
+		int match = findMatch(uri, "bulkInsert");
+		Context context = getContext();
+		// See the comment at delete(), above
+		SQLiteDatabase db = getDatabase(context);
+		String table = mTables[match>>BASE];
+		DebugUtils.logProvider(TAG, "bulkInsert values into table " + table);
+
+		int insertCount = 0;
+		db.beginTransaction();
+		try {
+			int count = values.length;
+			for (int i = 0; i < count; i++) {
+				if (db.insertOrThrow(table, null, values[i]) > 0) {
+					insertCount++;
+				} else {
+					DebugUtils.logProvider(TAG, "bulkInsert value into table failed " + values[i].toString());
+				}
+			}
+			db.setTransactionSuccessful();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			DebugUtils.logProvider(TAG, "bulkInsert value into table failed " + e.getMessage());
+		} finally {
+			db.endTransaction();
+		}
+		return insertCount;
+	}
 }

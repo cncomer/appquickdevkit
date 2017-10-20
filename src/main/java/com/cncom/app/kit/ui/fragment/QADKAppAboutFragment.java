@@ -55,7 +55,10 @@ public class QADKAppAboutFragment extends QADKFragment implements OnClickListene
 		mCurrentVersionCodeName = prefs.getString(ComPreferencesManager.KEY_LATEST_VERSION_CODE_NAME, "");
 		mServiceAppInfo = new ServiceAppInfoCompat(getActivity());
 		args = getArguments();
-		mDownloadUrl = args.getString(EXTRA_DOWNLOAD_URL);
+		if (args != null) {
+			mDownloadUrl = args.getString(EXTRA_DOWNLOAD_URL);
+		}
+
 
 	}
 

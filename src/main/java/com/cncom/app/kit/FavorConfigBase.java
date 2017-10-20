@@ -37,7 +37,6 @@ import com.shwy.bestjoy.utils.ServiceResultObject;
 import com.shwy.bestjoy.utils.SpinnerBinderUtils;
 import com.umeng.message.UmengNotificationClickHandler;
 
-import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -99,7 +98,7 @@ public class FavorConfigBase extends UmengNotificationClickHandler {
 
         String processName = QADKApplication.getInstance().getCurProcessName();
         if (mApplication.getPackageName().equals(processName)
-                || processName.equals(processName+":channel")) {
+                || processName.equals(mApplication.getPackageName()+":channel")) {
             initPushSdk();
         }
     }
@@ -127,7 +126,6 @@ public class FavorConfigBase extends UmengNotificationClickHandler {
     public void mainActivityOnCreate() {
         if (QADKAccountManager.getInstance().hasLoginned()) {
             YouMengMessageHelper.getInstance().onProfileSignIn(QADKAccountManager.getInstance().getAccountObject().mAccountUid);
-            UpdateService.startCheckDeviceTokenToService(mApplication);
         }
     }
 
@@ -356,19 +354,24 @@ public class FavorConfigBase extends UmengNotificationClickHandler {
         if (eventObject instanceof LoginInEvent) {
             LoginInEvent loginInEvent = (LoginInEvent) eventObject;
             loginIn((AbstractAccountObject) loginInEvent.object);
-            EventBus.getDefault().post(loginInEvent);
         } else if (eventObject instanceof LoginOutEvent) {
             loginOut();
-            LoginOutEvent loginOutEvent = (LoginOutEvent) eventObject;
-            EventBus.getDefault().post(loginOutEvent);
+        } else if (eventObject instanceof LoginOutEvent.LoginOutFinishEvent) {
+            loginOutFinish();
         }
     }
 
+    /**
+     * 删除账户时候触发
+     */
     protected void loginOut() {
         QADKAccountManager.getInstance().saveLastUsrTel("");
         clearAppCache();
         YouMengMessageHelper.getInstance().onProfileSignOff();
 
+    }
+
+    protected void loginOutFinish() {
 
     }
 

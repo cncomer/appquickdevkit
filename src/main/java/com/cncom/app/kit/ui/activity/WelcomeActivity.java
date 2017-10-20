@@ -112,14 +112,21 @@ public class WelcomeActivity extends QADKActionbarActivity implements OnClickLis
 			int lastVersion = ComPreferencesManager.getInstance().mPreferManager.getInt(ComPreferencesManager.KEY_LATEST_VERSION, 0);
 			if (currentVersion > lastVersion) {
 				// 设置版本号
-				DebugUtils.logD(TAG, "showHelpOnFirstLaunch");
+				DebugUtils.logD(TAG, "onCreate 设置版本号");
 				SharedPreferences.Editor edit = ComPreferencesManager.getInstance().mPreferManager.edit();
 				edit.putInt(ComPreferencesManager.KEY_LATEST_VERSION, currentVersion);
 				edit.putString(ComPreferencesManager.KEY_LATEST_VERSION_CODE_NAME, currentVersionCodeName);
 
 				edit.putBoolean(ComPreferencesManager.KEY_LATEST_VERSION_INSTALL, true);
 				edit.putLong(ComPreferencesManager.KEY_LATEST_VERSION_LEVEL, 0);
+
 				edit.commit();
+
+				DebugUtils.logD(TAG, "onCreate 标记app更新检查需要的当前版本号 mVersionCode=" + currentVersion + ", mVersionName=" + currentVersionCodeName);
+				mServiceAppInfo.mVersionCode = currentVersion;
+				mServiceAppInfo.mVersionName = currentVersionCodeName;
+				mServiceAppInfo.save();
+
 				//删除下载更新的临时目录，确保没有其他的安装包了
 				File downloadFile = QADKApplication.getInstance().getExternalStorageRoot(".download");
 				if(downloadFile != null) FilesUtils.deleteFile(TAG, downloadFile);

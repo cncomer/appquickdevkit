@@ -7,7 +7,7 @@ import android.graphics.drawable.Drawable;
  */
 
 public class AppMenuItem {
-    public int itemId;
+    public int itemCode;
 
     public CharSequence title;
 
@@ -18,15 +18,15 @@ public class AppMenuItem {
     public String stringValue = "";
     public int position = 0;
 
-    public AppMenuItem(int categoryId, int itemId, int position, CharSequence title) {
-        this.itemId = itemId;
+    public AppMenuItem(int categoryId, int itemCode, int position, CharSequence title) {
+        this.itemCode = itemCode;
         this.title = title;
         this.categoryId = categoryId;
         this.position = position;
     }
 
-    public int getItemId() {
-        return itemId;
+    public int getItemCode() {
+        return itemCode;
     }
 
     public int getCategoryId() {

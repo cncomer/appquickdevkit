@@ -5,6 +5,7 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
+import android.text.TextUtils;
 
 import com.bestjoy.library.scan.utils.DebugUtils;
 import com.cncom.app.kit.database.BjnoteContent;
@@ -34,8 +35,34 @@ public class SimpleCommonDataObjectImpl extends CommonDataObject {
     public String jsonObjectString="";
     public long sid = -1;
 
-    public void initFromJsonObjectString(String jsonObjectString) {
-        this.jsonObjectString = jsonObjectString;
+    protected void initFromJsonObject(JSONObject jsonObject) throws JSONException {
+
+    }
+
+    /**
+     * 解析时候使用
+     * @param jsonObject
+     * @throws JSONException
+     */
+    public void parseJsonObject(JSONObject jsonObject) throws JSONException {
+        initFromJsonObject(jsonObject);
+        if (jsonObject != null) {
+            this.jsonObjectString = jsonObject.toString();
+        }
+    }
+
+    /**
+     * 根据jsonObjectString初始化
+     * @param jsonObjectString
+     */
+    public void parseJsonObjectString(String jsonObjectString) {
+        if (!TextUtils.isEmpty(jsonObjectString)) {
+            try {
+                parseJsonObject(new JSONObject(jsonObjectString));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void initFromCursor(Cursor cursor) {
@@ -43,7 +70,7 @@ public class SimpleCommonDataObjectImpl extends CommonDataObject {
         sid = cursor.getLong(INDEX_sid);
         mId = cursor.getLong(INDEX_ID);
         dataType = cursor.getString(INDEX_COMMON_DATA5_DATA_TYPE);
-        initFromJsonObjectString(cursor.getString(INDEX_src_content));
+        parseJsonObjectString(cursor.getString(INDEX_src_content));
     }
 
 
@@ -70,9 +97,12 @@ public class SimpleCommonDataObjectImpl extends CommonDataObject {
         if (addtion != null) {
             contentValues.putAll(addtion);
         }
+
         String[] selectArgs = new String[]{uid, dataType, String.valueOf(sid)};
-        if (mId == -1) {
-            mId = BjnoteContent.existed(cr, BjnoteContent.CommonData.CONTENT_URI, WHERE_UID_DATA_TYPE_SID, selectArgs);
+        if (sid != -1) {
+            if (mId == -1) {
+                mId = BjnoteContent.existed(cr, BjnoteContent.CommonData.CONTENT_URI, WHERE_UID_DATA_TYPE_SID, selectArgs);
+            }
         }
 
         if (mId <= 0) {
@@ -90,6 +120,17 @@ public class SimpleCommonDataObjectImpl extends CommonDataObject {
             return updated > 0;
         }
     }
+
+    /**
+     * 批量插入
+     * @param contentResolver
+     * @param contentValues
+     * @return
+     */
+    public static int bulkInsert(ContentResolver contentResolver, ContentValues[] contentValues) {
+        return contentResolver.bulkInsert(BjnoteContent.CommonData.CONTENT_URI, contentValues);
+    }
+
 
     public static <T extends SimpleCommonDataObjectImpl> List<T> parseList(Class<T> cls, JSONArray jsonArray) {
         int len = jsonArray.length();
@@ -124,7 +165,7 @@ public class SimpleCommonDataObjectImpl extends CommonDataObject {
 
     public static <T extends SimpleCommonDataObjectImpl> T parse(Class<T> cls, JSONObject jsonObject) throws JSONException, IllegalAccessException, InstantiationException {
         T simpleCommonDataObject = cls.newInstance();
-        simpleCommonDataObject.initFromJsonObjectString(jsonObject.toString());
+        simpleCommonDataObject.parseJsonObject(jsonObject);
         return simpleCommonDataObject;
 
     }
