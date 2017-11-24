@@ -7,10 +7,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.cncom.app.kit.FavorConfigBase;
 import com.cncom.app.kit.QADKAccountManager;
 import com.cncom.app.kit.QADKApplication;
 import com.cncom.app.kit.R;
 import com.cncom.app.kit.database.BjnoteContent;
+import com.cncom.app.kit.event.LoginInEvent;
 import com.shwy.bestjoy.account.AbstractAccountObject;
 import com.shwy.bestjoy.utils.AsyncTaskUtils;
 import com.shwy.bestjoy.utils.ComPreferencesManager;
@@ -19,6 +21,7 @@ import com.shwy.bestjoy.utils.Intents;
 import com.shwy.bestjoy.utils.NetworkRequestHelper;
 import com.shwy.bestjoy.utils.ServiceResultObject;
 
+import org.greenrobot.eventbus.EventBus;
 
 
 /**
@@ -64,6 +67,14 @@ public abstract class AbstractLoginOrUpdateAccountDialog extends Activity implem
 			ServiceResultObject serviceResult = (ServiceResultObject) result;
 			if (serviceResult.isOpSuccessfully()) {
 				setResult(Activity.RESULT_OK);
+
+				if (QADKAccountManager.getInstance().getAccountObject() != null) {
+					LoginInEvent loginInEvent = new LoginInEvent();
+					loginInEvent.object = QADKAccountManager.getInstance().getAccountObject();
+					FavorConfigBase.getInstance().dealEvent(loginInEvent);
+
+					EventBus.getDefault().post(loginInEvent);
+				}
 				QADKApplication.getInstance().showMessage(R.string.msg_login_confirm_success);
 			} else {
 				QADKApplication.getInstance().showMessage(serviceResult.mStatusMessage);

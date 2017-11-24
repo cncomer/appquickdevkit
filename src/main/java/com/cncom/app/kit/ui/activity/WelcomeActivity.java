@@ -99,7 +99,12 @@ public class WelcomeActivity extends QADKActionbarActivity implements OnClickLis
 				}
 			}
 
-			showWelcomeLayout();
+			if (addsDrawableId.length > 0) {
+                showWelcomeLayout();
+            } else {
+			    DebugUtils.logE(TAG, "onCreate no WelcomePage");
+			    finish();
+            }
 			return;
 		}
 
@@ -204,7 +209,13 @@ public class WelcomeActivity extends QADKActionbarActivity implements OnClickLis
 					}
 				}
 			}
-			showWelcomeLayout();
+
+            if (addsDrawableId.length > 0) {
+                showWelcomeLayout();
+            } else {
+                DebugUtils.logW(TAG, "onCreate no WelcomePage");
+                showJump();
+            }
 		} else {
 			showJump();
 		}

@@ -167,4 +167,12 @@ public class QADKWifiManager {
         WifiInfo info = wifiManager.getConnectionInfo();
         return info.getMacAddress();
     }
+
+    /**
+     * 返回mac地址的简单形式，如F0FEXXXXXXXX
+     * @return
+     */
+    public String getSimpleMac() {
+        return QADKWifiManager.getInstance().getMac().replaceAll(":", "");
+    }
 }

@@ -3,14 +3,10 @@ package com.cncom.app.kit;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.cncom.app.kit.event.LoginInEvent;
-import com.cncom.app.kit.event.LoginOutEvent;
 import com.shwy.bestjoy.ComApplication;
 import com.shwy.bestjoy.account.AbstractAccountManager;
 import com.shwy.bestjoy.account.AbstractAccountObject;
 import com.shwy.bestjoy.utils.SecurityUtils;
-
-import org.greenrobot.eventbus.EventBus;
 
 /**
  * Created by bestjoy on 2017/5/3.
@@ -65,19 +61,5 @@ public class QADKAccountManager extends AbstractAccountManager{
     @Override
     public synchronized void notifyAccountChange(AbstractAccountObject accountObject) {
         super.notifyAccountChange(accountObject);
-
-        if (accountObject != null) {
-            LoginInEvent loginInEvent = new LoginInEvent();
-            loginInEvent.object = accountObject;
-            FavorConfigBase.getInstance().dealEvent(loginInEvent);
-
-            EventBus.getDefault().post(loginInEvent);
-        } else {
-            LoginOutEvent loginOutEvent = new LoginOutEvent();
-            FavorConfigBase.getInstance().dealEvent(loginOutEvent);
-            EventBus.getDefault().post(loginOutEvent);
-
-        }
-
     }
 }

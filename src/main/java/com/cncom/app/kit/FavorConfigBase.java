@@ -86,6 +86,8 @@ public class FavorConfigBase extends UmengNotificationClickHandler {
     /**Favor app init itself*/
     public  void initFromApplication() {
         DebugUtils.logD(TAG, "initFromApplication()");
+        MyLeakCanary.getInstance().install(mApplication);
+
         DebugUtils.DEBUG = QADKApplication.getInstance().isInDebug();
         NetworkUtils.setDebugMode(DebugUtils.DEBUG);
         GzipNetworkUtils.setDebugMode(DebugUtils.DEBUG);
@@ -197,6 +199,7 @@ public class FavorConfigBase extends UmengNotificationClickHandler {
             }
         }
     }
+
     public void clearAppCache() {
         //删除files/cache目录
         FilesUtils.deleteFile("DeleteCacheTask ", QADKApplication.getInstance().getAppFile(FileTypeUtils.DIR_CACHE, null));
