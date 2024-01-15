@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'  
-group='com.github.cncomer'
+
 android {
     compileSdkVersion 25
     buildToolsVersion "26.0.2"
@@ -76,4 +76,18 @@ dependencies {
     debugApi 'com.squareup.leakcanary:leakcanary-android:1.5'
     releaseApi 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
     api 'org.greenrobot:eventbus:3.0.0'
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            // Creates a Maven publication called "release".
+            release(MavenPublication) {
+                from components.release
+                groupId = 'com.github.cncomer'
+                artifactId = 'appquickdevkit'
+                version = '1.0'
+            }
+        }
+    }
 }
